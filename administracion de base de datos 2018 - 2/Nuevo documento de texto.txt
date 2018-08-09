@@ -1,0 +1,178 @@
+create data base xxxxx
+show database = \l
+user database xxx= \c xxxx 
+create table departamento (id_departa int primary key,
+	departa varchar(20));
+
+create table municipio (id_munici int primary key,
+	nombre_munici varchar(20),
+	capital boolean default false,
+	fk_id_departa int);
+
+alter table municipio add  foreign key (fk_id_departa) 	
+	references departamento(id_departa);
+
+create table iglesia (id_iglesia int primary key,
+	nombre_iglesia varchar(20),
+	sector int,
+	central boolean default false,
+	fk_id_munici int);
+
+create table evento (id_evento int primary key,
+	fecha date,
+	hora_inicio time,
+	fk_id_iglesia int,
+	fk_id_diaS int);
+
+create table dia_santo(id_diaS int primary key,
+	nom_dia_santo varchar(20),
+	nom_procesion varchar(20));
+
+alter table evento add  foreign key (fk_id_dia) 	
+	references dia_santo(id_dias);
+
+create table lidera(id_lidera int primary key,
+	nom_lidera varchar(20),
+	jeraquia varchar(20),
+	fk_id_evento int);
+
+alter table lidera add  foreign key (fk_id_evento) 	
+	references evento (id_evento);
+
+alter table iglesia add sector int;
+
+create table lugar_evento_iglecia(fk_id_evento int,
+	fk_id_iglesia int, 
+	punto_encuentros varchar(20),
+	hora_final time);
+alter table lugar_evento_iglecia add primary key (fk_id_evento,fk_id_iglesia);
+
+alter table lugar_evento_iglecia add  foreign key (fk_id_evento) 	
+	references evento (id_evento);
+
+alter table lugar_evento_iglecia add  foreign key (fk_id_iglesia) 	
+	references iglesia (id_iglesia);
+
+
+insert into dia_santo values (57,'domingoRamos','procesion de ramos'),
+	(51,'lunes','Eucaristía'),
+	(52,'martes','Nuestra Señora'),
+	(53,'miercoles','Amo Jesús'),
+	(54,'jueves','Señor Veracruz'),
+	(55,'viernes','Santo Entierro'),
+	(56,'sabado','Resucitado'),
+	(58,'normal','otros');
+	
+
+insert into evento values  (71,'2012/02/25', '11:12:00',1111,57,5),
+	(79,'2012/02/25', '11:12:00',1111,57,1),
+	(72,'2017/08/2', '00:00:00',1111,51,6),
+	(73,'2018/06/3', '12:59:5',1121,52,2),
+	(74,'2019/05/6', '1:59:5',1311,53,6),
+	(75,'2014/08/7', '2:5:5',1122,54,9),
+	(76,'2011/01/4', '12:5:05',1311,55,2),
+	(77,'2012/03/4', '3:9:9',1121,56,8),
+	(78,'2013/02/6', '21:59:9',1121,58,9);
+
+insert into lidera values (789,'hola','pastor',71),
+	(792,'hola','obispo',71),
+	(790,'hola2','pastor2',79),
+	(791,'hola3','pastor4',79);
+
+
+
+
+
+
+
+
+
+insert into lugar_evento_iglecia values (71,1111,'santodomingo','13:5:05'),
+	(72,1121,'santodomingo','13:5:05'),
+	(73,1122,'rivera','13:5:05'),
+	(72,1311,'iglesia2','17:5:05'),
+	(78,1121,'retorno','1:5:05');
+
+
+
+ \d
+
+
+select  evento.fecha,dia_santo.nom_dia_santo from evento 
+	inner join dia_santo on dia_santo.id_diaS = evento.fk_id_diaS;
+
+
+select municipio.nombre_munici, iglesia.nombre_iglesia, evento.fecha, 
+	dia_santo.nom_procesion,dia_santo.nom_dia_santo, lidera.nom_lidera, 
+	departamento.departa from departamento
+	inner join municipio on municipio.fk_id_departa = departamento.id_departa
+	inner join iglesia on iglesia.fk_id_munici = municipio.id_munici
+	inner join evento on evento.fk_id_iglesia = iglesia.id_iglesia
+	inner join dia_santo on evento.fk_id_dias = dia_santo.id_dias
+	inner join lidera on lidera.fk_id_evento = evento.id_evento;
+
+
+
+select municipio.nombre_munici, iglesia.nombre_iglesia,evento.fecha,
+	departamento.departa from departamento
+	inner join municipio on municipio.fk_id_departa = departamento.id_departa
+	inner join iglesia on iglesia.fk_id_munici = municipio.id_munici
+	inner join evento on evento.fk_id_iglesia = .id_evento;
+
+	inner join dia_santo on evento.fk_id_dias = dia_santo.id_dias
+	inner join lidera on lidera.fk_id_evento = evento.id_evento;
+
+
+insert into municipio values (111,'florencia',true,11),
+	(112,'moreria',false,11),
+	(121,'risaralda',false,12),
+	(122,'cocoa',false,12),
+	(131,'pitalito',true,13);
+
+
+
+
+
+
+
+
+
+copy (
+select municipio.nombre_munici, iglesia.nombre_iglesia, evento.fecha, 
+	dia_santo.nom_procesion,dia_santo.nom_dia_santo, lidera.nom_lidera, 
+	departamento.departa from departamento
+	inner join municipio on municipio.fk_id_departa = departamento.id_departa
+	inner join iglesia on iglesia.fk_id_munici = municipio.id_munici
+	inner join evento on evento.fk_id_iglesia = iglesia.id_iglesia
+	inner join dia_santo on evento.fk_id_dias = dia_santo.id_dias
+	inner join lidera on lidera.fk_id_evento = evento.id_evento) TO 'G:\prueba1.txt' WITH DELIMITER E'\T';
+
+
+
+
+
+permisos de usuario
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+create tables poliza (int id_poliza, 
+	estado_poli boolean default false,
+	precio_poli int,
+	fk_id );

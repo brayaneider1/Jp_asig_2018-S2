@@ -1,0 +1,262 @@
+
+\c   // seleccionar base de datos
+\d   // ver tablas
+\d nombre tabla    // ver cada tabla
+\l   // ver bases de datos
+\q   //salir
+
+CREATE USER nanotutoriales PASSWORD 'password';
+DROP USER nanotutoriales; // borrarlo
+ALTER ROLE
+El manejo de roles en PostgreSQL permite diferentes configuraciones, entre ellas estan:
+
+SUPERUSER/NOSUPERUSER. Super usuario, privilegios para crear bases de datos y usuarios.
+CREATEDB/NOCREATEDB. Permite crear bases de datos.
+CREATEROLE/NOCREATEROLE. Permite crear roles.
+CREATEUSER/NOCREATEUSER. Permite crear usuarios.
+LOGIN/NOLOGIN. Este atributo hace la diferencia entre un rol y usuario. Ya que el usuario tiene permisos para acceder a la base de datos a traves de un cliente.
+PASSWORD. Permite alterar la contraseña.
+VALID UNTIL. Expiración de usuarios.
+
+ALTE ROLE <nombre del rol> WITH <opciones>
+ALTER ROLE nanotutoriales WITH SUPERUSER;
+ALTER ROLE nanotutoriales WITH PASSWORD 'nuevopassword';
+
+createdb name;  // crear BD
+CREATE DATABASE nanotutoriales_website WITH OWNER nanotutoriales; //
+//Crear una base de datos con un usuario específico como propietario
+GRANT ALL PRIVILEGES ON DATABASE nanotutoriales_website TO nanotutoriales; //
+//Asignar todos los permisos a un usuario a una base de datos existente
+\du  // que rol posee un usuario
+user doc
+password pass2
+\c prueba2;
+\dp   // lisstar permisos sobre cada tabla
+grant select, insert, delete,update on all tables in schema publi to xxx(rol)
+select * from pg_user;  // ver descripcion de roles/usuarios
+create group name; // crear un grupo de roles
+create group name with user name1, name2;
+
+cd /D C:\PostgreSQL\pg10\bin
+psql -U postgres -h localhost
+
+
+//ALTER ROLE admi WITH SUPERUSER;
+grant connect on database basedata3 to usuario6;        
+revoke all on schema publi from public; 
+revoke all on database basedata3 from public; //
+revoke all on database basedata3 from rol1; //asi me banearon :"v 
+               nombre trigger 
+create trigger producto_in after insert on producto for each row 
+insert into
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE USER admi PASSWORD 'contraadmi';
+CREATE USER usuario1 PASSWORD 'user1';
+create user usuario2 password 'user2';
+CREATE USER usuario3 PASSWORD 'user3';
+create user usuario4 password 'user4';
+CREATE USER usuario5 PASSWORD 'user5';
+create user usuario6 password 'user6';
+ALTER ROLE admi WITH SUPERUSER;
+
+//base de datos3 usuario admi
+CREATE DATABASE basedata3 WITH OWNER admi;
+
+
+
+create table infor (id_infor int primary key,
+	descricion varchar(100));
+
+create table trabajo (id_trabajo int primary key,
+	cargo varchar(30));
+
+create table casa (id_casa int primary key,
+	calle varchar(100));
+
+create table auto (id_auto int primary key,
+	tipo_auto varchar(30));
+
+create table hola(id_hola int primary key,
+	hola_mundo varchar(100));
+
+create table one_piece (id_one_piece int primary key,
+	personajes varchar(30),
+	banda varchar(30));
+
+GRANT ALL PRIVILEGES ON DATABASE basedata3 TO admi; 
+
+
+
+
+grant  insert on all tables in schema public to usuario1;
+
+select * from pg_user;  
+\l
+\du
+
+create role rol1;
+create role rol2;
+create role rol3;
+create role rol4;
+
+grant select on one_piece   to rol1;
+grant insert, select on one_piece to rol2; 
+grant connect on database basedata3 to usuario6;                               grant connect on database basedata3 to usuario6;
+
+grant rol2 to usuario6;
+
+grant connect on database basedata3 to usuario6;
+insert into one_piece values(10,'zoro','muguiwara');
+insert into one_piece values(11,'sanji','muguiwara');
+ insert into one_piece values(9,'luffy','supernova');
+create table one(id_one int primary key,
+	
+	dsfjkhkjsdhfkjhsdkjfhkjsa varchar(30));
+
+grant select on one_piece,auto   to rol3;
+
+
+grant rol3 to usuario5,usuario4; //rol a varios usuarios 
+
+grant update,insert,select on one_piece, trabajo, hola to rol4;  ///varios tablas y funciones al mismo rol
+
+grant rol4 to usuario3;
+
+grant rol2,rol3 to usuario2;           //varios roles en un usuario;
+
+grant  all privileges on all tables in schema publi to usuario1;
+
+ insert into one_piece values(9,'luffy','supernova');
+
+
+create table one2(id_one2 int primary key,
+	
+	dsfjkhkjsdhfkjhsdkjfhkjsa2 varchar(30));
+
+
+ejemplo
+create table empelado(nom_emple varchar(20),
+	salario_emple int,
+	las_dat timestamp,
+	las_use varcahr (20));
+
+
+create or replace function emp() returns trigger as $emp$
+	begin
+		if new.nom_emple is null then
+			raise exception notice 'no se inserto el nombre del empleado';
+		end if;
+
+	end;
+emp language plpgsql;
+
+create trigger emp before insert or update on empleado
+	for each row execute procedure emp();
+
+create trigger emp 
+	before //en que momento se ejecuta before o after 
+	insert or update// tipo de evento, delete se incluye
+	on empleado//nombre de la tabla 
+	for each row //indica si se efecuta por cada fila de la tabla o por cada sentecia sql, statemente
+	execute procedure emp();//nombre de la funcion o arcumento
+
+//ejemplo 2
+create fnction respaldo () returns trigger as $backup$
+	declare
+	begin
+		insert into servicio_respaldo values(
+			old.id_ser,
+			old.nom_ser);
+		return null;
+	end
+	$backup$ language plpgsql;
+
+trigger :es una accion definida en una tabla de nuestra base de datos y se ejecuta automaticamente por una funcion programa
+tr_b_ins_upd_dele_emp
+trigger_momento_accion_tabla
+
+
+
+
+revoke all on schema publi from public; 
+revoke all on database basedata3 from public; //
+revoke all on database basedata3 from rol1; //asi me banearon :"v 
+
+create trigger producto_in after insert on producto for each row
+
+create table sum( a int, b int, c int,fk_operacion); 
+
+insert into sum (a,b) values (3,4);
+
+create  function fuct_suma() returns trigger as $fuct_suma$
+	
+	begin
+		select sum.a+sum.b from sum;
+		insert into sum(c) values(d);
+		return null;
+	end;
+$fuct_suma$ language plpgsql;
+
+create trigger tr_a_ins_sum after insert  on sum
+	for each row execute procedure fuct_suma();
+
+create or replace function suma()
+	returns trigger as $$
+	begin	
+		new.c=(new.a+new.b);
+		return new;
+	end;
+$$ language 'plpgsql';
+
+create trigger hacer_suma
+	before insert
+	on sum for each row
+	execute procedure suma();
+
+create fnction respaldo () returns trigger as $backup$
+	declare
+	begin
+		insert into servicio_respaldo values(
+			old.id_ser,
+			old.nom_ser);
+		return null;
+	end
+	$backup$ language plpgsql;
+
+
+
+drop trigger tr_a_ins_sum on sum;
+drop function fuct_suma();
+
+
+insert into sum (a,b) values (5,5);
+tablita con suma y resta,divisio y multiplicar
+// tabla operacion de uno a mucho con suma
+
+create table sum( a int, b int, c int,fk_operacion int); 
+create table operacion( id_opera int, nom_opera varchar(20)); 
+
+alter table sum add contraint fk_operacion foreign key
+(id_operacion) references operacion(id_opera);
+
+
+alter table animales add constraint fk_especie foreign key 
+(id_especie) references especie(id_especie); 
+
+
+///en la colñumna area, agregar el usuario que inserta esa area
+begin 
+	new.users("columna")=USER;
+	RETURN new;
+end;

@@ -1,0 +1,65 @@
+create database jmc;
+
+create table pais ( id_pais integer,  nom_pais varchar(30));
+
+create table departameto( id_depart integer, nom_depart varchar(30), fk_id_pais integer ); 
+
+
+create table municipio( id_munici integer, nom_munici varchar(30), fk_id_depart integer ); 
+
+
+create table cliente( id_cliente integer, nom_cliente varchar(30),telefo_cliente varchar(30), 
+		fecha_nace_cliente date, direcc_cliente varchar(30), fk_id_munici integer ); 
+
+create table compra_poliza_cliente( id_compra_poliza integer, vigencia_clie_poli integer, fecha_compra date,
+		fk_id_cliente integer, fk_id_poliza integer);
+
+create table poliza( id_poliza integer, precio_poliza integer, fk_id_estado_poliza integer, 
+		fk_id_tipo_poliza integer, fk_id_tipo_material_hogar integer, direcc_hogar varchar(100),
+		antiguedad_hogar integer,cant_habita_hogar varchar(100), caracteris_hogar varchar(100),
+		fk_id_tipo_uso_hogar integer, modelo_automovil integer, placa_automovil varchar(10),
+		fk_id_clase_auto integer, fk_id_tipo_auto integer, fk_id_servicio_automovil integer,
+		edad_vida integer, fk_id_nivel_segu_social_salud integer);
+		
+
+create table tipo_poliza( id_tipo_poliza integer,nom_tipo_poliza varchar(30));
+
+
+create table estado_poliza( id_estado_poliza integer,nom_estado_poliza varchar(30));
+
+
+
+create table tipo_material_hogar( id_tipo_material_hogar integer,nom_tipo_material_hogar varchar(30), 
+			costo_tipo_material_hogar integer);
+
+
+
+create table tipo_uso_hogar( id_tipo_uso_hogar integer,nom_tipo_uso_hogar varchar(30), costo_tipo_uso_hogar integer);
+
+create table clase_automovil( id_clase_automovil integer,nom_clase_automovil varchar(30), costo_clase_automovil integer);
+
+create table tipo_automovil( id_tipo_automovil integer,nom_tipo_automovil varchar(30), costo_tipo_automovil integer);
+
+
+
+create table servicio_automovil( id_servicio_automovil integer,nom_servicio_automovil varchar(30), costo_servicio_automovil integer);
+
+create table nivel_segu_social_salud( id_nivel_segu_social_salud integer,nom_nivel_segu_social_salud varchar(30), 
+		porcentaje_nivel integer);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

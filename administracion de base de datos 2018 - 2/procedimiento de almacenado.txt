@@ -1,0 +1,63 @@
+alter table EMPLOYEES  modify COMMISSION_PCT number(7,2) ;
+----------------------------------------------------------------------------------------------
+CREATE or replace PROCEDURE PR_UPDT_NIVEL IS
+BEGIN
+    DECLARE
+     CURSOR INICIAR IS
+     SELECT EMPLOYEE_ID,(CASE SALARY WHEN 2100 THEN (SALARY*0.25)
+               WHEN 24000 THEN (SALARY*0.05)
+               ELSE (SALARY*0.12) END) COMICION            
+               FROM EMPLOYEES WHERE HIRE_DATE BETWEEN '01-01-1991' AND '31-12-1998'; 
+               ID_EM NUMBER;
+               COMICION NUMBER;
+     BEGIN 
+     
+     OPEN INICIAR;     
+       FETCH INICIAR INTO ID_EM,COMICION;
+       WHILE INICIAR%found
+         LOOP       
+	            UPDATE EMPLOYEES 
+              SET COMMISSION_PCT=COMICION
+              WHERE  COMMISSION_PCT<COMICION AND EMPLOYEE_ID=ID_EM;
+              FETCH INICIAR INTO ID_EM,COMICION;              
+           END LOOP;     
+         CLOSE INICIAR;
+         commit;
+   END;
+END;
+----------------------------------------------------------------------------------
+execute PR_UPDT_NIVEL;
+
+select COMMISSION_PCT from EMPLOYEES;
+
+alter table EMPLOYEES  modify COMMISSION_PCT number(7,2) ;
+----------------------------------------------------------------------------------------------
+CREATE or replace PROCEDURE PR_UPDT_NIVEL IS
+BEGIN
+    DECLARE
+     CURSOR INICIAR IS
+     SELECT EMPLOYEE_ID,(CASE SALARY WHEN 2100 THEN (SALARY*0.25)
+               WHEN 24000 THEN (SALARY*0.05)
+               ELSE (SALARY*0.12) END) COMICION            
+               FROM EMPLOYEES WHERE HIRE_DATE BETWEEN '01-01-1991' AND '31-12-1998'; 
+               ID_EM NUMBER;
+               COMICION NUMBER;
+     BEGIN 
+     
+     OPEN INICIAR;     
+       FETCH INICIAR INTO ID_EM,COMICION;
+       WHILE INICIAR%found
+         LOOP       
+	            UPDATE EMPLOYEES 
+              SET COMMISSION_PCT=COMICION
+              WHERE  COMMISSION_PCT<COMICION AND EMPLOYEE_ID=ID_EM;
+              FETCH INICIAR INTO ID_EM,COMICION;              
+           END LOOP;     
+         CLOSE INICIAR;
+         commit;
+   END;
+END;
+----------------------------------------------------------------------------------
+execute PR_UPDT_NIVEL;
+
+select COMMISSION_PCT from EMPLOYEES;

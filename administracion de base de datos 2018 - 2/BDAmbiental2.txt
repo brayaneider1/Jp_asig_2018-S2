@@ -1,0 +1,377 @@
+show databases;
+create database BD_parque;
+show databases;
+use BD_parque;
+create table comunidad (id_com int primary key, 
+	nombreComu varchar(20),
+org_responsable varchar(20));
+
+show tables;
+describe comunidad;
+create table parque (id_parque int primary key, 
+	 nombrepark varchar(20), 
+	 fecha date);
+
+create table personal (id_persona int primary key,
+	nss int,
+	nombre varchar(20),
+	direccion varchar(30), 
+ 	Telefono int,
+	sueldo int,
+	id_parque int);
+
+create table areas (id_area int primary key, 
+	extension int,
+	id_parque int);
+
+
+create table especie (id_especie int primary key, 
+	nombre_cienti varchar(30), 
+	nombre_Vulgar varchar(30));
+
+
+create table vegetales (id_vegetales int , 
+	periodo date, 
+	Florecio boolean default false,
+	id_especie int);
+
+create table animales(id_animales int , 
+	periodo_celo date,
+	tipo_alimento varchar(10) check (tipo_alimento in("herbivoro","carnivoro","omnivoros")),
+	id_especie int );
+
+create table minerales (id_mineral int , 
+	tipo_minerales varchar(10) check (tipo_minerales in("cristales","toca")),
+	id_especie int );
+
+create table visitante (id_visitante int primary key, 
+	nom_visitante varchar(10),
+	profescion varchar(20),
+	domicilio varchar (10));
+
+
+create table investigador(id_investigador int , 
+	titulacion varchar(20),
+	id_persona int );  
+
+create table proyecto(id_proyecto int primary key,  
+	presupuesto int,
+	fecha_inicio date,
+	fecha_fin date,
+ 	id_especie int); 
+
+create table conservacion(id_conservacion int,
+	nombre_area varchar (20), 
+	tipo_tarea varchar(20),
+	id_persona int);  
+
+create table vehiculo(id_vehiculo int primary key,  
+	tipo_vehiculo varchar(20),
+ 	id_persona int);  
+
+create table entrada(id_entrada int primary key, 
+ 	id_parque int);
+
+
+create table comunidad_parque(id_com int,
+	 id_parque int,
+ 	superficie int);
+
+create table excur_visit(id_excursion int,
+	id_visitante int);
+
+create table aloj_vist(id_alojamiento int,
+	id_visitante int,
+	fecha_inicio date,
+	fecha_fin date);
+
+create table especi_area(id_especie int,
+	id_area int,
+	cant_individual int);
+
+create table inves_proye(id_proyecto int,
+	id_inves int);
+
+create table excursion(id_excursion int primary key,
+	fecha date,
+	hora time,
+	apie int,
+	id_alojamiento int);
+
+create table alojamiento(id_alojamiento int primary key,
+	categori varchar (1),
+	capacidad int,
+	id_parque int);
+
+create table vigilante(id_persona int,
+	id_area varchar (20));
+
+create table gestor(id_persona int,
+	id_entrada int);
+
+
+select
+select nombre_Vulgar,periodo_celo  
+	from animales
+	where id_  
+	order by id_cliente asc;
+
+select nombre_animal, periodo_celo
+	from animal
+	order by iid_animal;
+
+//traer el los nombre de los vigilantes
+
+
+select personal.nombre_persona
+	from P_vigilancia inner join personal on personal.idpersona = p_vigilacia.idp_vigilancia
+	order by  personal.nombre_persona asc; //es ma facil buscar de la llave foranea y luego primaria                      
+//traer el nombre del vigilante el turno que tiene y que tipo de vehiculo 
+
+select personal.nombre_persona, turno_P_vigilacion.idturno_P_vigilacion, vehiculo.tipo_vehiculo from P_vigilancia
+	inner join personal on personal.idpersona = p_vigilacia.idp_vigilancia 
+	inner join turno_P_vigilacion on turno_P_vigilacion.p_vigilancia_idp_vigilancia=p_vigilancia.idp_vigilancia
+	inner join vehiculo on  turno_P_vigilacion.vehiculo_idvehiculo = vehiculo.matricula_vehiculo
+	order by  personal.nombre_persona asc; 
+
+select personal.nombre_persona, turno_P_vigilacion.idturno_P_vigilacion, vehiculo.tipo_vehiculo from P_vigilancia
+	inner join personal on personal.idpersona = p_vigilacia.idp_vigilancia 
+	inner join turno_P_vigilacion on turno_P_vigilacion.p_vigilancia_idp_vigilancia=p_vigilancia.idp_vigilancia
+	inner join vehiculo on  turno_P_vigilacion.vehiculo_idvehiculo = vehiculo.matricula_vehiculo
+	order by  personal.nombre_persona asc;  //est
+
+//areas con su respectivo vigilante, cuya estesion sea mayores 350
+select personal.nombre_persona from personal
+	inner join p_vigilacia on p_vigilacia.personal_idpersona=personal.idpersona
+	inner join areas on  p_vigilacia.areas_idareas=areas.idareas
+	where areas.extesion_area>350
+	order by areas.idareas asc, personal.nombre_persona desc;
+	
+
+//todos los titulos que tiene los investigadores
+
+insert into personal(id_persona, nss, nombre, direccion,telefono, sueldo, id_parque)
+	values (1, 'super pinshe amo','deudor'),
+	(2, 'super amo','no deudor'),
+	(3, 'tex','no deudor');
+
+ 
+alter table animales add constraint fk_especie foreign key 
+(id_especie) references especie(id_especie); 
+
+
+alter table vegetales add constraint fk_especieVegetal foreign key 
+(id_especie) references especie(id_especie); 
+
+
+alter table minerales add constraint fk_especie_mine foreign key 
+(id_especie) references especie(id_especie); 
+
+alter table comunidad_parque add constraint fk_id_comunidad_par foreign key 
+(id_com) references comunidad(id_com); 
+
+alter table comunidad_parque add constraint fk_id_parque_comu foreign key 
+(id_parque) references parque(id_parque); 
+
+alter table excur_visit add constraint fk_id_excur_visit foreign key 
+(id_excursion) references excursion(id_excursion);  
+
+alter table excur_visit add constraint fk_id_visit_excur foreign key 
+(id_visitante) references visitante(id_visitante); 
+
+
+alter table aloj_vist add constraint fk_id_aloj_vist foreign key 
+(id_alojamiento) references alojamiento(id_alojamiento); 
+
+alter table aloj_vist add constraint fk_id_vist_aloja foreign key 
+(id_visitante) references visitante(id_visitante); 
+
+
+alter table especi_area add constraint fk_id_especi_area foreign key 
+(id_especie) references especie(id_especie); 
+
+alter table especi_area add constraint fk_id_area_especi foreign key 
+(id_area) references areas(id_area); 
+
+
+
+
+alter table conservacion add constraint fk_id_persona_conser foreign key 
+(id_persona) references personal(id_persona); 
+
+
+alter table vigilante add constraint fk_id_persona_vigil foreign key 
+(id_persona) references personal(id_persona); 
+
+
+alter table investigador add constraint fk_id_persona_inves foreign key 
+(id_persona) references personal(id_persona); 
+
+
+
+
+alter table gestor add constraint fk_id_persona_gestor foreign key 
+(id_persona) references personal(id_persona); 
+
+alter table gestor add constraint fk_id_entrada foreign key 
+(id_entrada) references entrada(id_entrada); 
+
+alter table entrada add constraint fk_id_parque_entrada foreign key 
+(id_parque) references parque(id_parque); 
+
+alter table alojamiento add constraint fk_id_parque_aloja foreign key 
+(id_parque) references parque(id_parque); 
+
+alter table excursion add constraint fk_id_aloja foreign key 
+(id_alojamiento) references alojamiento(id_alojamiento); 
+
+
+
+
+
+
+
+alter table vehiculo add constraint fk_id_persona foreign key 
+(id_persona) references vigilante(id_persona); 
+
+
+
+
+
+
+
+
+
+
+
+tarea:
+nota:la palabra y el parentecis debe estar pegado simpre 
+ sum(cantidad)
+max(precio)
+avg(promedio)
+min(minimo)
+count()
+
+
+
+
+
+alter table elemento add contraint fk_id_categoria foreign key (fk_id_categoria)
+alter table parque add column id_com int;
+alter table parque add   foreign key (id_com) references comunidad(id_com);
+//alter table elemento add contraint fk_id_categoria foreign key (fk_id_categoria)
+) reference categoria(id_categoria);
+//arter table elemento alter column atributo1 rename fk_id_categhotia; 
+
+//arter table elemento alter column atributo1 rename fk_id_categhotia; 
+//
+//arter table elemento alter column atributo1 rename fk_id_categhotia; 
+//alter table parque add   foreign key (id_com) references comunidad(id_com);
+//select num_grupo as numero form asignatura;
+alter table areas add column id_park int;
+
+
+
+alter table areas add  foreign key (id_park) references parque(id_park);
+
+create tabla
+
+
+//alter table "tbla" add constraint  "" primary key "prima_parque "; 
+//delete  from"" where "id_empleado";
+//update "" set "salario"=10000  where salario=xxxreferencia;
+// insert into "tabla"  values ("",);
+
+
+//alter table "tbla" add column "foraneanombre con indetificaso" 
+//alter table "tabla copia" add  foreign key ("compo a cobertir") references "tabla original"(llave primaria de l tabla a relacionar)
+
+
+//foreign key (N_tabla)references tabla(N_tabla);
+
+
+
+
+////create table alogamiento(id_aloga int primary key, //listo
+	capacidad int,
+ 	categoria varchar(10));
+//
+
+//create intex myindice on empleado*tabla(id_empleado*atibuto);
+//create intex myindice on empleado*tabla(id_empleado*atibuto);
+//create unique myindice on empleado*tabla(id_empleado*atibuto);//unico no se repita 
+
+
+
+
+
+
+
+ 	//t_movil int,
+ 	//t_domic int, 
+	sueldo int,
+	
+
+
+
+//create table usuarios(id int primary key auto increment,
+	nombre varchar(50) not null,
+	 nombreuser varchar (10),
+	 admi boolean default false)Engine=InnoDB;
+show tables;
+describe usuarios;
+create table privilegios(id_previ in(3) primary key, 
+	descripcion text)Engine=InnoDB;
+insert into privilegios (id, descripcion)
+	values (1, "super pinse amo");
+insert into privilegios (id, descripcion)
+	values (2, "normal");
+insert into privilegios (id, descripcion)
+	values (3, "user malo");
+select * from privilegios;
+alter table usuario add privilegio int(3) 
+	references privilegios(id);
+describe usuarios;
+insert into usuarios (nombre,nombreUser, privilegio)
+	values ("user1","antonio",1);
+insert into usuarios (nombre,nombreUser, privilegio)
+	values ("user2","antonieta",2);
+insert into usuarios (nombre,nombreUser, privilegio)
+	values ("user3","addd",3);
+
+//Foreign key (id-perona) references persona(id);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+create table cliente(id_cliente int primary key,
+	nom_cliente varchar(10),
+	est_cliente varchar(10) check (est_cliente in("amoroso","nada")));
+create tabla cuota (id_cuota int primary key,
+	fecha_cuota date,
+	valor_cuota int,
+	fk_tarjera int);
+
+create tabla tipo_tarjeta (id_tipo_tajeta int primary key,
+	nom_tipo_tarjeta int,
+	est_tipo_tarjeta varchar(10) check (est_cliente in("activo","inactivo")));
+create tarjeta(id_tarjeta int primary key,
+	fecha_tarjeta date,
+	valor_tarjeta int  )
+

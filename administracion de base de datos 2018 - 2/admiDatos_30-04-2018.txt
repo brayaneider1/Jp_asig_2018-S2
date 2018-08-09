@@ -1,0 +1,59 @@
+nomina (fecha(actual), periodo(mes de fecha), total (por defecto 0), id)
+Detalle_nomina(id,cantidad,valor)
+
+
+consecto_nomina (id,nombre, valor_conseato(),porcentaje, operacion(+,-), estado(0,1))
+
+
+
+
+
+
+
+boolean default false,
+
+ 
+
+create table nomina( id_nomina int primary key, fecha date, total int default 0); 
+
+create table Detalle( id_detalle int primary key, cantidad int, 
+		valor int,fk_nomina int,
+		fk_concepto int); 
+
+create table concepto(id_concepto int primary key, nombre varchar,
+	 valor_concep int,
+	tipo_valor boolean default false,
+	 operacion boolean default false,
+	 estado boolean default false);
+
+
+alter table detalle add constraint fk_nomina foreign key
+(fk_nomina) references nomina(id_nomina);
+
+alter table detalle add constraint fk_concepto foreign key
+(fk_concepto) references concepto(id_concepto);
+
+
+insert into nomina values(1,'11-11-2010',100);
+
+
+
+
+create or replace function funct_calcular()
+	returns trigger as $$
+	begin	
+		if(estado = true && porcentaje  )
+		new.c=(new.valor-new.b);
+		return new;
+	end;
+$$ language 'plpgsql';
+
+create trigger calcular
+	before insert
+	on detalle for each row
+	execute procedure funct_calcular();
+
+
+
+
+//default 0

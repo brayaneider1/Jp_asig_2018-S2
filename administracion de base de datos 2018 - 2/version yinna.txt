@@ -1,0 +1,554 @@
+show databases;
+create database parque;
+show databases;
+use parque;
+
+
+show tables;
+describe comunidad;
+drop table comunidad;
+drop database ambiental;
+delete from areas;
+
+create table comunidad_autonoma (id_com int primary key,
+	nombre_com varchar(20),
+	fk_responsable_com int);
+
+create table responsable (id_responsable int primary key,
+	nombre_org varchar(45));
+
+
+create table parque_natural (id_parque int primary key, 
+	nombre_parque varchar(45), 
+	fecha date);
+
+create table p_gestion (idp_gestion int primary key,
+	descripcion varchar(45),
+	fk_personal_idp int);
+
+create table p_investigador (idp_investigador int primary key,
+	descripcion varchar(45),
+	fk_personal_idp int);
+
+create table titulacion (id_titulacion int primary key,
+	nombre varchar(45),
+	fk_p_investigador_idp int,
+	fk_p_investigador_personal_idp int);
+
+
+
+create table turno_p_vigilancia (idturno_vigilancia int primary key,
+	fk_vehiculo_idvehiculo int,
+	fk_vigilancia_idp int,
+	estado_vigilancia char(45));
+
+create table vehiculo (matricula_vehiculo int primary key,
+	tipo_vehiculo varchar(45));
+
+create table areas (id_areas int primary key, 
+	nombre_area varchar(20), 
+	extension_area float,
+	usuarios_Ins varchar(30),
+	fk_parque_natural int);
+
+create table p_vigilancia (idp_vigilancia int primary key,
+	descripcion varchar(45),
+	fk_personal_idp int,
+	fk_areas_idareas int);
+
+
+create table minerales (id_min int primary key,
+	tipo_mineral varchar(20));
+
+create table empleado (id_emple int primary key,
+	telefono_emple int,
+	seguro_social int,
+	sueldo int);
+
+create table visitante (id_vis int primary key,
+	profesion varchar(20));
+
+
+create table proyecto (id_proy int primary key,
+	periodo date,
+	presupuesto int);
+
+
+
+create table especialidad (id_espcial int primary key,
+	tipo_esp varchar(20));
+
+
+create table entrada (id_ent int primary key,
+	num_entrada int);
+
+create table alojamiento (id_aloja int primary key,
+	categoria varchar(20),
+	capacidad int);
+
+create table personal (id_persona int primary key, 
+	nombre_persona varchar(45),
+	seguridad_social varchar(25),
+	direccion varchar(30),
+	telefono varchar(30),
+	sueldo varchar(45),
+	fk_parque_natural int);
+create table especie (id_esp int primary key,
+	nombre_cientifico varchar(30),
+	nombre_coloquial varchar(30));
+
+create table animal (id_animal int primary key,
+	nombre_animal varchar(45),
+	periodo_celo date,
+	fk_especie_idespecies int);
+
+//20 tablas 
+
+
+
+
+create table vegetal (id_vegetal int primary key,
+	periodo date,
+	fk_especie_idespecies int);
+
+create table comunidad_parque (id_com_park int primary key,
+	fk_com_autonoma int,
+	fk_parque_natural int,
+	estado char(10));
+
+create table area_especie (estado_area char(45),
+	fk_idespecies_esp int,
+	fk_idareas_area int,
+	cantidad_especie int);
+
+create table proy_inves (idproy_inves int primary key,
+	presupuesto varchar(45),
+	periodo_real date);
+
+create table proyecto_especie (idproyecto_especie int primary key,
+	fk_proy_inves_idproy int,
+	fk_especie_idespecies int,
+	estado_proyec char(45));
+
+//25 tablas 
+
+
+alter table comunidad_autonoma add constraint fk_responsable_com
+foreign key (fk_responsable_com) references responsable (id_responsable);
+
+alter table comunidad_parque add constraint fk_com_autonoma
+foreign key (fk_com_autonoma) references comunidad_autonoma (id_com);
+
+alter table personal add constraint fk_parque_natural_per
+foreign key (fk_parque_natural) references parque_natural (id_parque);
+
+
+
+alter table p_investigador add constraint fk_personal_idp
+foreign key (fk_personal_idp) references personal (id_persona);
+
+alter table titulacion add constraint fk_p_investigador_idp
+foreign key (fk_p_investigador_idp) references 
+p_investigador (idp_investigador);
+
+alter table titulacion add constraint fk_p_investigador_person_idp
+foreign key (fk_p_investigador_personal_idp) references 
+personal (id_persona);
+
+
+
+alter table p_vigilancia add constraint fk_personal_idp_vig
+foreign key (fk_personal_idp) references personal (id_persona);
+
+alter table p_vigilancia add constraint fk_areas_idareas_vig
+foreign key (fk_areas_idareas) references areas (id_areas);
+
+alter table areas add constraint fk_parque_natural_idparque
+foreign key (fk_parque_natural) references 
+parque_natural (id_parque);
+
+
+
+
+
+alter table area_especie add constraint fk_idespecies_esp
+foreign key (fk_idespecies_esp) references especie (id_esp);
+
+alter table area_especie add constraint fk_idareas_area
+foreign key (fk_idareas_area) references areas (id_areas);
+
+
+alter table proyecto_especie add constraint fk_proy_inves_idproy 
+foreign key (fk_proy_inves_idproy) references
+proy_inves (idproy_inves);	 
+
+
+
+
+
+
+alter table proyecto_especie add constraint fk_especie_idespecies 
+foreign key (fk_especie_idespecies) references
+especie (id_esp);
+
+
+alter table vegetal add constraint fk_especie_id_especies
+foreign key (fk_especie_idespecies) references especie (id_esp);
+
+
+
+alter table animal add constraint fk_especie_id_especies_ani
+foreign key (fk_especie_idespecies) references especie (id_esp);
+
+
+
+
+
+
+
+
+
+insert into comunidad_autonoma values (00001,'A',11112),
+	(00002,'B',11113),
+	(00003,'C',11114),
+	(00004,'D',11115),
+	(00005,'E',11116);
+
+insert into responsable values (11112,'Antonio'),
+	(11113,'Betancourt'),
+	(11114,'Caicedo'),
+	(11115,'David'),
+	(11116,'Edison');
+insert into parque_natural values (22211,'V','1980-02-09'),
+	(22212,'W','1990-11-09'),
+	(22213,'W','1996-08-02'),
+	(22214,'Y','2000-03-03'),
+	(22215,'V','1967-08-05');
+
+
+
+insert into comunidad_parque values (33331,00001,22221,'1'),
+	(33332,00002,22222,'0'),
+	(33333,00003,22223,'0'),
+	(33334,00004,22224,'1'),
+	(33335,00005,22225,'1');
+
+insert into comunidad_parque values (33336,00001,22226,'1'),
+	(33337,00002,22227,'0'),
+	(33338,00003,22228,'0'),
+	(33339,00004,22229,'1'),
+	(33310,00005,22210,'1');
+
+
+
+
+insert into personal values (44441,'Francisco','F','Armenia',
+	'3133567890','1.340.000',22221),
+	(44442,'Ana Lucia','G','Florencia',
+	'3213457890','1.500.000',22222),
+	(44443,'Sara','J','Pitalito',
+	'3143567554','1.670.000',22223),
+	(44444,'Rodolfo','F','Neiva',
+	'3133512345','1.540.000',22224),
+	(44445,'Dario','G','Barranquilla',
+	'3133786590','1.310.000',22225);
+
+insert into p_investigador values (55551,'El señor(a)...',44441),
+	(55552,'El señor(a)...',44442),
+	(55553,'El señor(a)...',44443),
+	(55554,'El señor(a)...',44444),
+	(55555,'El señor(a)...',44445);
+
+
+
+////
+insert into titulacion values (66661,'especialista en vegetales',44441,55551),
+	(66662,'doctorado en aves',44442,55552),
+	(66663,'especialista en hongos',44443,55553),
+	(66664,'especialista en mamiferos',44444,55554),
+	(66665,'especialista en herviboros',44445,55555);
+/////
+
+
+
+
+
+insert into areas values (77771,'montaña',1000,22221),
+	(77772,'acuario',500,22223),
+	(77773,'fauna',750,22224),
+	(77774,'flora',100,22225),
+	(77775,'monumentos',260,22226);
+
+
+
+
+
+insert into especie values (001,'CA','SA'),
+	(002,'CE','SE'),
+	(003,'CI','SI'),
+	(004,'CO','SO'),
+	(005,'CU','SU'),
+	(006,'CA','SA');
+
+
+
+
+insert into area_especie values ('1',001,77771),
+	('0',002,77772),
+	('0',003,77773),
+	('1',004,77774),
+	('1',005,77775);
+
+
+
+
+
+
+
+
+
+
+create index myindice on empleado(id_emple telefono);
+create unique myindice on empleado(id_emple telefono);//unico
+
+(primary key 
+
+
+
+insert into persona values (1006234256,"Luisa Ar","porvenir");
+
+select * from persona;
+
+insert into persona values (1004354678,"Salomón","Cali")
+	(1234764967,"Felipe","Cartagena"),
+	(1117342123,"Danna","Valledupar");
+
+select * from persona;
+
+alter table parque add column id_com int;
+
+
+create table tipo_alimentacion (idtipo_alimentacion int primary key,
+	descripcion varchar(45),
+	fk_animal_idanimal int,
+	fk_vegetal_idvegetal int);
+
+
+alter table parque add   foreign key (id_com) references comunidad(id_com);
+//alter table elemento add contraint fk_id_categoria foreign key (fk_id_categoria)
+) reference categoria(id_categoria);
+//arter table elemento alter column atributo1 rename fk_id_categhotia; 
+
+//arter table elemento alter column atributo1 rename fk_id_categhotia; 
+//
+//arter table elemento alter column atributo1 rename fk_id_categhotia; 
+//alter table parque add   foreign key (id_com) references comunidad(id_com);
+//select num_grupo as numero form asignatura;
+alter table areas add column id_park int;
+
+alter table areas add  foreign key (id_park) references parque(id_park);
+
+
+//alter table "tbla" add constraint  "" primary key "prima_parque "; 
+//delete  from"" where "id_empleado";
+//update "" set "salario"=10000  where salario=xxxreferencia;
+// insert into "tabla"  values ("",);
+
+
+//alter table "tbla" add column "foraneanombre con indetificaso" 
+//alter table "tabla copia" add  foreign key ("compo a cobertir") references "tabla original"(llave primaria de l tabla a relacionar)
+
+
+//foreign key (N_tabla)references tabla(N_tabla);
+
+
+
+//traer el los nombre de los vigilantes
+
+
+select personal.nombre_persona
+	from P_vigilancia inner join personal on personal.idpersona = p_vigilacia.idp_vigilancia
+	order by  personal.nombre_persona asc; //es ma facil buscar de la llave foranea y luego primaria                      
+//traer el nombre del vigilante el turno que tiene y que tipo de vehiculo 
+
+select personal.nombre_persona, turno_P_vigilacion.idturno_P_vigilacion, vehiculo.tipo_vehiculo from P_vigilancia
+	inner join personal on personal.idpersona = p_vigilacia.idp_vigilancia 
+	inner join turno_P_vigilacion on turno_P_vigilacion.p_vigilancia_idp_vigilancia=p_vigilancia.idp_vigilancia
+	inner join vehiculo on  turno_P_vigilacion.vehiculo_idvehiculo = vehiculo.matricula_vehiculo
+	order by  personal.nombre_persona asc; 
+
+select personal.nombre_persona, turno_P_vigilacion.idturno_P_vigilacion, vehiculo.tipo_vehiculo from P_vigilancia
+	inner join personal on personal.idpersona = p_vigilacia.idp_vigilancia 
+	inner join turno_P_vigilacion on turno_P_vigilacion.p_vigilancia_idp_vigilancia=p_vigilancia.idp_vigilancia
+	inner join vehiculo on  turno_P_vigilacion.vehiculo_idvehiculo = vehiculo.matricula_vehiculo
+	order by  personal.nombre_persona asc;  //est
+
+
+Traer todos los nombres de los investigadores con sus respectivos 
+titulos y el nombre del parque donde trabajan
+
+select parques_naturales.nombre, titulacion.nombre from 
+parques_naturales inner join Personal on Personal.fk parques_natural
+=  parques_naturales.id_parque inner join
+P_investigador on P_investigador.fk_Personal = Personal.idPersona
+inner join Titulacion on Titulacion.fk_P_investigador = 
+P_investigador.idInvestigador order by nombre_parque,titulacion.nombre;
+
+
+
+Traer todas las areas y el id del vigilante si tiene
+
+select areas.nombre_area, p_vigilancia.idp_vigilancia from areas left join 
+p_vigilancia on p_vigilancia.areas_idAreas = areas.idAreas order by 
+areas.nombre, p_vigilancia.idp_vigilancia; //right join
+
+Area           Vigilante
+a1                01
+a1                02
+a2                04
+a3               null
+a4               null
+a5                08
+
+Traer todas las comunidades autonomas y si tienen relacion con el parque
+comuidad     parque
+c1             pnA
+c2             pnB
+c3             null
+cn
+
+select comunidad_autonoma.nombre_comunidad, parque_natural.nombre_parque
+from comunidad_autonoma on left join comunidad_parque on 
+comunidad_parque.comunidad_autonoma_idComunidad_autonoma = 
+comunidad_autonoma.idComunidad_autonoma left join parque_natural
+on parque_natural.comunidad_autonoma = parque_natural_idComunidad_autonoma
+order by nombre comunidad;
+
+
+Traer Todas las comunidades que no tienen parque
+
+select comunidad_autonoma.nombre_comunidad, parque_natural.nombre_parque
+from comunidad_autonoma on left join comunidad_parque on 
+comunidad_parque.comunidad_autonoma_idComunidad_autonoma = 
+comunidad_autonoma.idComunidad_autonoma left join parque_natural
+on parque_natural.comunidad_autonoma = parque_natural_idComunidad_autonoma
+order by nombre comunidad;
+
+where comunidad_autonoma_idComunidad_autonoma is null;
+
+
+Traer el total de parques o comunidad autonoma
+
+comunidad              total
+  C1                    8
+  c2                    2
+
+select comunidad_autonoma.nombre_com, count(parque_natural.id_parque)
+from comunidad_autonoma left join comunidad_parque on
+comunidad_parque.id_com_park = comunidad_autonoma.id_com
+left join parque_natural on comunidad_parque.id_com_park = parque_natural.
+id_parque group by comunidad_autonoma.nombre_com;
+
+
+Traer solo el valor de la mayor extension, 
+la menor extension, y la media
+
+
+select min(extension_area) as Minimo, max(extension_area)as Maximo, 
+avg(extension_area) as promedio from areas;
+
+
+sumar max y min y restar media
+
+select min(extension_area) + max(extension_area)
+- avg(extension_area) as resta from areas;
+
+
+Traer las comunidades que tengan mas de 3 parques
+
+
+select nombre_com, count(id_parque)
+from comunidad_autonoma inner join comunidad_parque on
+id_com = fk_com_autonoma
+inner join parque_natural on id_parque = fk_parque_natural
+group by (nombre_com)having count(fk_parque_natural)>=1
+order by (nombre_com) asc;
+
+Traer las comunidades autonomas cuyas areas del parque
+sean mayores a 500 y que tengan mas de 40 especies
+
+
+ 
+
+
+ALTER TABLE tabla1 add colNueva varchar(2);
+alter table personal drop pasatiempo;
+
+Que come cada animal
+
+alter table especie add esp_vegetal int;
+alter table especie add esp_animal int;
+
+alter table especie drop esp_vegetal;
+alter table especie drop esp_animal;
+
+alter table especie add fk_esp_hembra int;
+alter table especie add fk_esp_macho int;
+
+alter table animal add fk_esp_hembra int;
+alter table animal add fk_esp_macho int;
+alter table animal add fk_padre int;
+alter table animal add fk_madre int;
+
+alter table animal drop fk_esp_hembra;
+alter table animal drop fk_esp_macho;
+
+
+
+alter table animal add constraint fk_esp_hembra
+foreign key (fk_esp_hembra) references especie (id_esp);
+
+alter table animal add constraint fk_esp_macho
+foreign key (fk_esp_macho) references especie (id_esp);
+
+
+insert into animal values (88881,'Leòn','2018-09-02',001,1,0),
+	(88882,'Jirafa','2018-07-06',002,0,0),
+	(88883,'Tigre','2018-03-02',003,1,1),
+	(88884,'Cocodrilo','2018-04-08',004,1,1),
+	(88885,'Puma','2018-06-05',005,1,0),
+	(88886,'Pantera','2018-08-04',006,0,1);
+
+
+select animal.nombre_animal hijo, macho.nombre_animal papa,
+hembra.nombre_animal mama, macho2.nombre_animal abuelo,
+hembra2.nombre_animal abuela from animal 
+inner join animal papa on animal.fk_padre = papa.id_animal
+inner join animal mama on animal.fk_madre = mama.id_animal
+inner join animal abuelo on papa.fk_padre = abuelo.id_animal
+inner join animal abuela on mama.fk_madre = abuela.id_animal
+order by;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

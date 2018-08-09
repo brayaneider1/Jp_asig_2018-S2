@@ -1,0 +1,167 @@
+
+\c   // seleccionar base de datos
+\d   // ver tablas
+\d nombre tabla    // ver cada tabla
+\l   // ver bases de datos
+\q   //salir
+
+CREATE USER nanotutoriales PASSWORD 'password';
+
+DROP USER nanotutoriales; // borrarlo
+
+ALTER ROLE
+El manejo de roles en PostgreSQL permite diferentes configuraciones, entre ellas estan:
+
+SUPERUSER/NOSUPERUSER. Super usuario, privilegios para crear bases de datos y usuarios.
+CREATEDB/NOCREATEDB. Permite crear bases de datos.
+CREATEROLE/NOCREATEROLE. Permite crear roles.
+CREATEUSER/NOCREATEUSER. Permite crear usuarios.
+LOGIN/NOLOGIN. Este atributo hace la diferencia entre un rol y usuario. Ya que el usuario tiene permisos para acceder a la base de datos a traves de un cliente.
+PASSWORD. Permite alterar la contraseña.
+VALID UNTIL. Expiración de usuarios.
+
+
+ALTE ROLE <nombre del rol> WITH <opciones>
+
+ALTER ROLE nanotutoriales WITH SUPERUSER;
+
+ALTER ROLE nanotutoriales WITH PASSWORD 'nuevopassword';
+
+
+createdb name;  // crear BD
+CREATE DATABASE nanotutoriales_website WITH OWNER nanotutoriales; //
+//Crear una base de datos con un usuario específico como propietario
+
+GRANT ALL PRIVILEGES ON DATABASE nanotutoriales_website TO nanotutoriales; //
+//Asignar todos los permisos a un usuario a una base de datos existente
+
+
+\du  // que rol posee un usuario
+
+
+user doc
+password pass2
+\c prueba2;
+
+
+\dp   // lisstar permisos sobre cada tabla
+
+select * from pg_user;  // ver descripcion de roles/usuarios
+
+create group name; // crear un grupo de roles
+create group name with user name1, name2;
+
+//conextyarse con cmd, entra en la caprpeta bi de postgre
+//crea usuario y base de datos
+// crear un super usuario, crear base de datos y tablas 
+//todos los usuario puede conectase a la base de datos, (tres usuarios) 
+//un usuario le da permiso de insertar y 
+//el otro de eliminar datosde la bases de dato
+//ambos puede consultar 
+//con un usuario culaquiere conectase remotamente a 
+//ne3cesito la ipv6 del computador que se quiere conectar
+//ingresar un a base de datos, desde un usuario distinto, accion remota
+
+cd /D C:\PostgreSQL\pg10\bin
+
+psql -U postgres -h localhost 
+
+
+CREATE USER admi PASSWORD 'contraadmi';
+CREATE USER usuario1 PASSWORD 'user1';
+create user usuario2 password 'user2';
+CREATE USER usuario3 PASSWORD 'user3';
+create user usuario4 password 'user4';
+CREATE USER usuario5 PASSWORD 'user5';
+create user usuario6 password 'user6';
+ALTER ROLE admi WITH SUPERUSER;
+
+
+CREATE DATABASE basedata3 WITH OWNER admi;
+
+//base de datos3 usuario admi
+
+create table infor (id_infor int primary key,
+	descricion varchar(100));
+
+create table trabajo (id_trabajo int primary key,
+	cargo varchar(30));
+
+create table casa (id_casa int primary key,
+	calle varchar(100));
+
+create table auto (id_auto int primary key,
+	tipo_auto varchar(30));
+
+create table hola(id_hola int primary key,
+	hola_mundo varchar(100));
+
+create table one_piece (id_one_piece int primary key,
+	personajes varchar(30),
+	banda varchar(30));
+
+GRANT ALL PRIVILEGES ON DATABASE basedata3 TO admi; 
+
+grant select, insert, delete,update on all tables in schema publi to xxx(rol)
+
+
+grant  insert on all tables in schema public to usuario1;
+
+select * from pg_user;  
+\l
+\du
+
+///crear 3 usaria  una base de datos normales, 3 4 tabals, dar permiso x tablke y permisos, crear un rol
+///1 usuario,2 roll,3 super usuario con base de dato y tablas,4 rol_privilegio (podrainsetar,delen, consulta,consulta y iserta) solo a rol
+/// los roles e asisna a usuarios,6 ingreser usuario a una de las base de datos,7 probar los permisos
+
+create role rol1;
+create role rol2;
+create role rol3;
+create role rol4;
+//ALTER ROLE admi WITH SUPERUSER;
+grant select on one_piece   to rol1;
+grant insert, select on one_piece to rol2; 
+grant connect on database basedata3 to usuario6;                               grant connect on database basedata3 to usuario6;
+
+grant rol2 to usuario6;
+
+grant connect on database basedata3 to usuario6;
+insert into one_piece values(10,'zoro','muguiwara');
+insert into one_piece values(11,'sanji','muguiwara');
+ insert into one_piece values(9,'luffy','supernova');
+create table one(id_one int primary key,
+	
+	dsfjkhkjsdhfkjhsdkjfhkjsa varchar(30));
+
+grant select on one_piece,auto   to rol3;
+
+
+grant rol3 to usuario5,usuario4; //rol a varios usuarios 
+
+grant update,insert,select on one_piece, trabajo, hola to rol4;  ///varios tablas y funciones al mismo rol
+
+grant rol4 to usuario3;
+
+grant rol2,rol3 to usuario2;           //varios roles en un usuario;
+
+grant  all privileges on all tables in schema publi to usuario1;
+
+ insert into one_piece values(9,'luffy','supernova');
+
+
+create table one2(id_one2 int primary key,
+	
+	dsfjkhkjsdhfkjhsdkjfhkjsa2 varchar(30));
+
+revoke all on schema publi from public; 
+revoke all on database basedata3 from public; //
+revoke all on database basedata3 from rol1; //asi me banearon :"v 
+
+
+               nombre trigger 
+create trigger producto_in after insert on producto for each row 
+insert into
+
+
+
