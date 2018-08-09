@@ -49,6 +49,9 @@ create table nivel_segu_social_salud( id_nivel_segu_social_salud integer,nom_niv
 
 
 
+create table aseguradora( id_asegurador integer,nom_asegurador varchar(30), fk_id_poliza integer
+		telefo_asegurador, asegurador integer);
+
 
 
 
