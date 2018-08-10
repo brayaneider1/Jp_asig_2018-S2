@@ -1,16 +1,14 @@
 create database jmc;
 
+use jmc;
 create table pais ( id_pais integer,  nom_pais varchar(30));
 
-create table departameto( id_depart integer, nom_depart varchar(30), fk_id_pais integer ); 
-
+create table departamento( id_depart integer, nom_depart varchar(30), fk_id_pais integer ); 
 
 create table municipio( id_munici integer, nom_munici varchar(30), fk_id_depart integer ); 
 
-
 create table cliente( id_cliente integer, nom_cliente varchar(30),telefo_cliente varchar(30), 
 		fecha_nace_cliente date, direcc_cliente varchar(30), fk_id_munici integer ); 
-
 create table compra_poliza_cliente( id_compra_poliza integer, vigencia_clie_poli integer, fecha_compra date,
 		fk_id_cliente integer, fk_id_poliza integer);
 
@@ -21,18 +19,12 @@ create table poliza( id_poliza integer, precio_poliza integer, fk_id_estado_poli
 		fk_id_clase_auto integer, fk_id_tipo_auto integer, fk_id_servicio_automovil integer,
 		edad_vida integer, fk_id_nivel_segu_social_salud integer);
 		
-
 create table tipo_poliza( id_tipo_poliza integer,nom_tipo_poliza varchar(30));
-
 
 create table estado_poliza( id_estado_poliza integer,nom_estado_poliza varchar(30));
 
-
-
 create table tipo_material_hogar( id_tipo_material_hogar integer,nom_tipo_material_hogar varchar(30), 
 			costo_tipo_material_hogar integer);
-
-
 
 create table tipo_uso_hogar( id_tipo_uso_hogar integer,nom_tipo_uso_hogar varchar(30), costo_tipo_uso_hogar integer);
 
@@ -40,28 +32,35 @@ create table clase_automovil( id_clase_automovil integer,nom_clase_automovil var
 
 create table tipo_automovil( id_tipo_automovil integer,nom_tipo_automovil varchar(30), costo_tipo_automovil integer);
 
-
-
 create table servicio_automovil( id_servicio_automovil integer,nom_servicio_automovil varchar(30), costo_servicio_automovil integer);
 
 create table nivel_segu_social_salud( id_nivel_segu_social_salud integer,nom_nivel_segu_social_salud varchar(30), 
 		porcentaje_nivel integer);
 
+create table aseguradora( id_asegurador integer,nom_asegurador varchar(30), fk_id_poliza integer,
+		telefo_asegurador varchar(250), asegurador integer);
+
+create table cobertura( id_cobertura integer,nom_cobertura varchar(30), fk_id_poliza integer, fk_id_indemnizacion integer);
 
 
-create table aseguradora( id_asegurador integer,nom_asegurador varchar(30), fk_id_poliza integer
-		telefo_asegurador, asegurador integer);
+create table indemnizacion(id_indemnizacion integer, costo_indemn integer, fk_id_estado_indemn integer);
+
+create table estado_indemnizacion(id_estado_indemn integer, nom_estado_indemn varchar(100));
+
+create table cubre_cobert_sinies (id_cubre_cobert_sinies integer, aceptar_sisniestro varchar(250), fk_id_cobert integer,
+		fk_id_sinies integer);
+
+create table siniestro(id_sinies integer, nom_sinies varchar(250), descricion_cobert varchar(250));
 
 
 
+alter table departamento add constraint fk_id_pais foreign key 
+(fk_id_pais) references pais(id_pais); 
 
 
 
-
-
-
-
-
+alter table vigilante add constraint fk_id_persona_vigil foreign key 
+(id_persona) references personal(id_persona); 
 
 
 
