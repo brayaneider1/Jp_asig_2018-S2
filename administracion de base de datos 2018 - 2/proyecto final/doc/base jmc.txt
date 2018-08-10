@@ -53,15 +53,65 @@ create table cubre_cobert_sinies (id_cubre_cobert_sinies integer, aceptar_sisnie
 create table siniestro(id_sinies integer, nom_sinies varchar(250), descricion_cobert varchar(250));
 
 
+alter table pais add primary key (id_pais);
 
 alter table departamento add constraint fk_id_pais foreign key 
-(fk_id_pais) references pais(id_pais); 
+(fk_id_pais) 
+	references pais(id_pais); 
+
+alter table departamento add primary key (id_depart);
+
+
+alter table municipio add primary key(id_munici), 
+	add constraint fk_id_depart foreign key 
+(fk_id_depart)
+ 	references departamento(id_depart); 
+
+alter table cliente add primary key(id_cliente), 
+	add constraint fk_id_munici foreign key 
+(fk_id_munici)
+ 	references municipio(id_munici);
+ 
+alter table poliza add primary key(id_poliza);
+
+alter table compra_poliza_cliente add primary key(id_compra_poliza), 
+
+	add constraint fk_id_cliente foreign key (fk_id_cliente)
+ references cliente(id_cliente),
+	
+	add constraint fk_id_poliza foreign key (fk_id_poliza)
+	references poliza(id_poliza); 
+
+alter table tipo_poliz add primary key (id_tipo_poliza);
+
+alter table estado_poliza add primary key (id_estado_poliza);
+
+alter table tipo_material_hogar add primary key (id_tipo_material_hogar);
+
+alter table tipo_uso_hogar add primary key (id_tipo_uso_hogar);
+
+alter table clase_automovil add primary key (id_clase_automovil);
+
+alter table servicio_automovil add primary key (id_servicio_automovil);
+
+alter table nivel_segu_social_salud add primary key (id_nivel_segu_social_salud);
 
 
 
-alter table vigilante add constraint fk_id_persona_vigil foreign key 
-(id_persona) references personal(id_persona); 
-
+alter table poliza add constraint fk_id_tipo_poliza foreign key (fk_id_tipo_poliza)
+ references tipo_poliza(id_tipo_poliza),
+	
+	add constraint fk_id_estado_poliza foreign key (fk_id_estado_poliza)
+ references estado_poliza(id_estado_poliza),
+	add constraint fk_id_tipo_material_hogar foreign key(fk_id_tipo_material_hogar)
+ references tipo_material_hogar (id_tipo_material_hogar),
+	add constraint fk_id_tipo_uso_hogar foreign key (fk_id_tipo_uso_hogar)
+ references tipo_uso_hogar(id_tipo_uso_hogar),
+	add constraint fk_id_clase_automovil foreign key (fk_id_clase_automovil)
+ references clase_automovil(id_clase_automovil),
+	add constraint fk_id_tipo_automovil foreign key (fk_id_estado_poliza)
+ references estado_poliza(id_estado_poliza),
+; 
 
 
 
