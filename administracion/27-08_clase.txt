@@ -1,0 +1,48 @@
+create database data_27_08;
+
+use data_27_08;
+--espere :v
+
+create table noticia(id_noticia int, 
+	nom_noticia varchar(255), 
+	fecha_noticia date,
+	fk_id_tipo_noticia int);
+
+create table tipo_noticia(id_tipo_noticia int, 
+	nom_tipo_noticia varchar(255));
+
+alter table noticia add primary key (id_noticia);
+
+alter table tipo_noticia add primary key (id_tipo_noticia);
+
+ alter table noticia  add constraint fk_id_tipo_noticia  foreign key
+(fk_id_tipo_noticia) references tipo_noticia(id_tipo_noticia);
+
+insert into tipo_noticia(id_tipo_noticia, nom_tipo_noticia)
+	values(111,"Evento Internos"),
+	(112,"Seminarios"),
+	(113,"Ponecias");
+
+insert into noticia(id_noticia,nom_noticia,fecha_noticia,fk_id_tipo_noticia)
+	values(11,"hola muendo",'1890-12-09',111),
+	(12,"hola suegra",'1990-11-09',111),
+	(13,"puto el que lo lea",'1998-3-09',113),
+	(14,"antonio",'1990-01-09',113),
+	(15,"me cago en colombia",'2016-11-26',113),
+	(16,"por los pinshe corrupcion",'2018-08-26',112);
+
+select * from noticia;
+
+select * from tipo_noticia;
+
+select noticia.nom_noticia,tipo_noticia.nom_tipo_noticia from noticia
+inner join tipo_noticia on noticia.fk_id_tipo_noticia= tipo_noticia.id_tipo_noticia;
+
+select noticia.nom_noticia,tipo_noticia.nom_tipo_noticia from noticia
+inner join tipo_noticia on noticia.fk_id_tipo_noticia= tipo_noticia.id_tipo_noticia
+where tipo_noticia.nom_tipo_noticia="Seminarios";
+
+
+
+
+
