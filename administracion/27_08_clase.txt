@@ -18,6 +18,12 @@ alter table tipo_noticia add primary key (id_tipo_noticia);
  alter table noticia  add constraint fk_id_tipo_noticia  foreign key
 (fk_id_tipo_noticia) references tipo_noticia(id_tipo_noticia);
 
+
+create table proyecto(id_proyecto int, nom_proyecto varchar(255),
+	descri_proyecto varchar(255));
+
+
+
 insert into tipo_noticia(id_tipo_noticia, nom_tipo_noticia)
 	values(111,"Evento Internos"),
 	(112,"Seminarios"),
@@ -30,6 +36,7 @@ insert into noticia(id_noticia,nom_noticia,fecha_noticia,fk_id_tipo_noticia)
 	(14,"antonio",'1990-01-09',113),
 	(15,"me cago en colombia",'2016-11-26',113),
 	(16,"por los pinshe corrupcion",'2018-08-26',112);
+
 
 select * from noticia;
 
