@@ -209,6 +209,11 @@ insert into telefono(id_telefono,nom_telefono,fk_id_usuario) values(440,"3102525
 select * from telefono; 
 
 
+create table tipo_entraga(id_tipo_entrega,nom_tipo_entrega)
+	values();
+
+
+
 
 
 
