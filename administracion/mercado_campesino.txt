@@ -1,0 +1,234 @@
+create database campesino;
+use campesino;
+
+create table usuario(id_usuario int, nom_usuario varchar(100), contra_usuario varchar(100),
+	nom_personal varchar(45), apelli_personal varchar(100), email_personal varchar(100));
+
+create table telefono(id_telefono int, nom_telefono varchar(100), fk_id_usuario int);
+
+create table cliente (id_cliente int, codigo_cliente varchar(45), fk_id_usuario int);
+
+create table mercante (id_mercante int, codigo_mercante varchar(45), fk_id_usuario int);
+
+
+create table stock_merca_producto(pk_fk_id_mercante int, pk_fk_id_producto int, fecha_stock date,
+	dispon_stock int);
+
+create table producto(id_producto int, nom_producto varchar(45), codigo_producto varchar(45),
+	precio_producto int, estado_producto boolean, fk_id_tipo_unidad int, fk_id_tipo_producto int,
+	fk_id_tipo_embalaje int);
+
+create table tipo_unidad(id_tipo_unidad int, nom_tipo_unidad varchar(100));
+
+create table tipo_producto(id_tipo_producto int, nom_tipo_unidad varchar(100));
+
+create table tipo_embalaje(id_tipo_embalaje int, nom_tipo_embalaje varchar(100));
+
+
+
+create table pedido(id_pedido int, codigo_pedido varchar(45), fecha_pedido date,
+	total_pedido int, estado_pedido boolean, fk_id_cliente int, fk_id_tipo_entrega int);
+
+
+create table tipo_entrega(id_tipo_entrega int, nom_tipo_entrega varchar(100));
+
+create table detalle_pedido_produc (pk_fk_id_pedido int, pk_fk_id_producto int, cantid_detalle int,
+	precio_detalle int, total_detalle int);
+
+
+---- primarias unicas(1)
+
+alter table usuario add constraint pk_usuario 
+primary key (id_usuario);
+
+alter table cliente add constraint pk_cliente 
+primary key (id_cliente);
+
+alter table mercante add constraint pk_usuario 
+primary key (id_mercante);
+
+alter table pedido add constraint pk_pedido
+primary key (id_pedido);
+
+alter table producto add constraint pk_producto
+primary key (id_producto);
+
+alter table telefono add constraint pk_telefono
+primary key (id_telefono);
+
+
+---- primari tipos 
+
+alter table tipo_entrega add  constraint pk_tipo_entrega 
+primary key (id_tipo_entrega);
+
+
+alter table tipo_producto add  constraint pk_tipo_producto 
+primary key (id_tipo_producto);
+
+
+alter table tipo_unidad add  constraint pk_tipo_unidad 
+primary key (id_tipo_unidad);
+
+
+alter table tipo_embalaje add  constraint pk_tipo_embalaje 
+primary key (id_tipo_embalaje);
+
+show tables;
+
+---- foreign normales
+
+alter table cliente  add constraint fk_id_usuario_cli  foreign key
+(fk_id_usuario) references usuario(id_usuario);
+
+alter table mercante  add constraint fk_id_usuario_mer  foreign key
+(fk_id_usuario) references usuario(id_usuario);
+
+alter table telefono  add constraint fk_id_usuario_tel  foreign key
+(fk_id_usuario) references usuario(id_usuario);
+
+alter table pedido  add constraint fk_id_cliente_ped  foreign key
+(fk_id_cliente) references cliente(id_cliente);
+
+alter table pedido  add constraint fk_id_tipo_entrega_ped  foreign key
+(fk_id_tipo_entrega) references tipo_entrega(id_tipo_entrega);
+
+alter table producto  add constraint fk_id_tipo_unidad_pro  foreign key
+(fk_id_tipo_unidad) references tipo_unidad(id_tipo_unidad);
+
+alter table producto  add constraint fk_id_tipo_producto_pro  foreign key
+(fk_id_tipo_producto) references tipo_producto(id_tipo_producto);
+
+alter table producto  add constraint fk_id_tipo_embalaje_pro  foreign key
+(fk_id_tipo_embalaje) references tipo_embalaje(id_tipo_embalaje);
+
+describe producto;
+
+describe mercante;
+
+--- foranea compuestas
+
+alter table stock_merca_producto  add constraint fk_fk_id_mercante  foreign key
+(pk_fk_id_mercante) references mercante(id_mercante);
+
+
+alter table stock_merca_producto  add constraint fk_fk_id_producto  foreign key
+(pk_fk_id_producto) references producto(id_producto);
+
+
+describe stock_merca_producto ;
+
+
+alter table stock_merca_producto add  constraint pk_stock_merca_producto 
+primary key (pk_fk_id_mercante,pk_fk_id_producto);
+
+
+describe stock_merca_producto ;
+
+
+describe detalle_pedido_produc;
+
+
+alter table detalle_pedido_produc  add constraint fk_fk_id_pedido  foreign key
+(pk_fk_id_pedido) references pedido(id_pedido);
+
+alter table detalle_pedido_produc  add constraint fk_fk_id_producto_det  foreign key
+(pk_fk_id_producto) references producto(id_producto);
+
+alter table detalle_pedido_produc add  constraint pk_detalle_pedido_produc 
+primary key (pk_fk_id_pedido,pk_fk_id_producto);
+
+
+describe detalle_pedido_produc;
+--------------- indices 
+
+alter table mercante add index(codigo_mercante);
+
+alter table cliente add index(codigo_cliente);
+
+
+alter table pedido add index(codigo_pedido);
+
+alter table producto add index(codigo_producto);
+
+----------
+
+
+
+insert into usuario values(111,"nom_usur1","contra_user1","nom_pers1","apelli_pers1","email_pers1"),
+	(112,"nom_usur2","contra_user2","nom_pers2","apelli_pers2","email_pers2"),
+	(113,"nom_usur3","contra_user3","nom_pers3","apelli_pers3","email_pers3"),
+	(114,"nom_usur4","contra_user4","nom_pers4","apelli_pers4","email_pers4"),
+	(115,"nom_usur5","contra_user5","nom_pers5","apelli_pers5","email_pers5"),
+	(116,"nom_usur6","contra_user6","nom_pers6","apelli_pers6","email_pers6"),
+	(117,"nom_usur7","contra_user7","nom_pers7","apelli_pers7","email_pers7"),
+	(118,"nom_usur8","contra_user8","nom_pers8","apelli_pers8","email_pers8"),
+	(119,"nom_usur9","contra_user9","nom_pers9","apelli_pers9","email_pers9"),
+	(120,"nom_usur10","contra_user10","nom_pers10","apelli_pers10","email_pers10"),
+	(121,"nom_usur11","contra_user11","nom_pers11","apelli_pers11","email_pers11"),
+	(122,"nom_usur12","contra_user12","nom_pers12","apelli_pers12","email_pers12");
+
+select * from usuario;
+
+insert into mercante(id_mercante,codigo_mercante,fk_id_usuario) values(221,"123codigo_merc999",111),
+	(222,"123codigo_merc998",113),
+	(223,"123codigo_merc997",115),
+	(224,"123codigo_merc996",117),
+	(225,"123codigo_merc995",122);
+
+select * from mercante; 
+
+insert into cliente(id_cliente,codigo_cliente,fk_id_usuario) values(331,"123codigo_cliec880",112),
+	(332,"123codigo_cliec881",114),
+	(333,"123codigo_cliec882",116),
+	(334,"123codigo_cliec883",118),
+	(335,"123codigo_cliec884",119),
+	(336,"123codigo_cliec885",120),
+	(337,"123codigo_cliec886",121);
+
+select * from cliente; 
+
+
+insert into telefono(id_telefono,nom_telefono,fk_id_usuario) values(440,"3102525257-0",111),
+	(441,"3102525257-1",111),
+	(442,"3102525257-2",112),
+	(443,"3102525257-3",113),
+	(444,"3102525257-4",114),
+	(445,"3102525257-5",114),
+	(446,"3102525257-6",114),
+	(447,"3102525257-7",115),
+	(448,"3102525257-8",116),
+	(449,"3102525257-9",117),
+	(450,"3102525257-10",118),
+	(451,"3102525257-11",119),
+	(452,"3102525257-12",120),
+	(453,"3102525257-13",121),
+	(454,"3102525257-14",122);
+
+
+select * from telefono; 
+
+
+
+
+
+
+
+
+
+
+insert into mercante(id_mercante,fk_id_usuario) values(221,111),
+	(222,113),
+	(223,115),
+	(224,117),
+	(225,122);
+
+select * from mercante; 
+
+insert into cliente(id_cliente,fk_id_usuario) values(221,111),
+	(222,113),
+	(223,115),
+	(224,117),
+	(225,122);
+
+
