@@ -210,10 +210,20 @@ select * from telefono;
 
 
 create table tipo_entraga(id_tipo_entrega,nom_tipo_entrega)
-	values();
+	values(50,"domicilio"),
+	(51,"xxxxx");
 
+describe tipo_embalaje;
 
+create table tipo_embalaje(id_tipo_embalaje,nom_embalaje)
+	values(60,"bolsa"),
+	(61,"tula"),
+	(62,"bolsa reutilizable");
 
+create table tipo_embalaje(id_tipo_embalaje,nom_embalaje)
+	values(60,"bolsa"),
+	(61,"tula"),
+	(62,"bolsa reutilizable");
 
 
 
