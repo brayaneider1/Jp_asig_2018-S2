@@ -20,7 +20,7 @@ create table producto(id_producto int, nom_producto varchar(45), codigo_producto
 
 create table tipo_unidad(id_tipo_unidad int, nom_tipo_unidad varchar(100));
 
-create table tipo_producto(id_tipo_producto int, nom_tipo_unidad varchar(100));
+create table tipo_producto(id_tipo_producto int, nom_tipo_producto varchar(100));
 
 create table tipo_embalaje(id_tipo_embalaje int, nom_tipo_embalaje varchar(100));
 
@@ -204,31 +204,146 @@ insert into telefono(id_telefono,nom_telefono,fk_id_usuario) values(440,"3102525
 	(452,"3102525257-12",120),
 	(453,"3102525257-13",121),
 	(454,"3102525257-14",122);
-
-
 select * from telefono; 
-
-
-create table tipo_entraga(id_tipo_entrega,nom_tipo_entrega)
+------------------------
+describe tipo_entrega;
+insert into  tipo_entrega(id_tipo_entrega,nom_tipo_entrega)
 	values(50,"domicilio"),
 	(51,"xxxxx");
-
+select * from tipo_entrega; 
+------------------
 describe tipo_embalaje;
-
-create table tipo_embalaje(id_tipo_embalaje,nom_embalaje)
+insert into  tipo_embalaje(id_tipo_embalaje,nom_tipo_embalaje)
 	values(60,"bolsa"),
 	(61,"tula"),
 	(62,"bolsa reutilizable");
+select * from tipo_embalaje; 
+---------------------------
+describe tipo_unidad;
+insert into  tipo_unidad(id_tipo_unidad,nom_tipo_unidad)
+	values(70,"Kilogramos"),
+	(71,"Libras"),
+	(72,"Bultos"),
+	(73,"arroba");
+select * from tipo_unidad; 
+---------------------------
+describe tipo_producto;
+insert into  tipo_producto(id_tipo_producto,nom_tipo_producto)
+	values(80,"Carnes"),
+	(81,"Fruta"),
+	(82,"Verdura"),
+	(83," tuberculo");
+select * from tipo_producto; 
+---------------------------
 
-create table tipo_embalaje(id_tipo_embalaje,nom_embalaje)
-	values(60,"bolsa"),
-	(61,"tula"),
-	(62,"bolsa reutilizable");
+describe pedido;
+insert into  pedido(id_pedido,codigo_pedido,fecha_pedido,total_pedido,estado_pedido,fk_id_cliente,fk_id_tipo_entrega)
+	values(550,"pedido_xxx_algo0",'2012/02/25',500,0,331,50),
+	(551,"pedido_xxx_algo1",'2008/01/30',1500,0,331,51),
+	(552,"pedido_xxx_algo2",'2009/02/22',2500,0,332,51),
+	(553,"pedido_xxx_algo3",'2018/03/23',5500,0,332,51),
+	(554,"pedido_xxx_algo4",'2018/05/18',1800,0,331,50),
+	(555,"pedido_xxx_algo5",'2017/04/19',6000,0,334,50),
+	(556,"pedido_xxx_algo6",'2016/05/29',500,0,333,51),
+	(557,"pedido_xxx_algo7",'2010/06/30',100,0,335,51),
+	(558,"pedido_xxx_algo8",'2015/07/23',600,0,332,50),
+	(559,"pedido_xxx_algo9",'2016/08/18',500,0,336,51),
+	(560,"pedido_xxx_algo10",'2011/09/05',1600,0,337,51),
+	(561,"pedido_xxx_algo11",'2015/05/07',2000,0,337,50),
+	(562,"pedido_xxx_algo12",'2018/12/06',55500,0,332,50);
+
+
+----------------------------------
+select * from tipo_unidad; 
+select * from tipo_producto; 
+select * from tipo_embalaje; 
+--------------------------------
+describe producto;
+
+insert into  producto(id_producto,nom_producto,codigo_producto,precio_producto,estado_producto,fk_id_tipo_unidad,fk_id_tipo_producto,fk_id_tipo_embalaje)
+	values(660,"cerdo","proct_nom_mer_hola0",100,1,70,80,60),
+	(661,"huevos","proct_nom_mer_hola1",3000,1,72,80,62),
+	(662,"tomate","proct_nom_mer_hola2",200,0,71,81,60),
+	(663,"tomate de arbol","proct_nom_mer_hola3",200,1,71,81,60),
+	(664,"yuca","proct_nom_mer_hola4",700,1,70,83,61),
+	(665,"arracacha","proct_nom_mer_hola5",600,1,71,83,62),
+	(666,"zanahoria","proct_nom_mer_hola6",400,0,71,83,60),
+	(667,"remolacha","proct_nom_mer_hola7",1200,1,71,83,62),
+	(668,"papa","proct_nom_mer_hola8",15000,1,73,83,61),
+	(669,"abichuela","proct_nom_mer_hola9",800,1,71,82,60),
+	(670,"abichuela2","proct_nom_mer_hola10",800,0,72,82,62),
+	(671,"platano","proct_nom_mer_hola11",2500,1,72,81,61),
+	(672,"banano","proct_nom_mer_hola12",100,1,73,81,61),
+	(673,"mazorca","proct_nom_mer_hola13",2500,1,73,81,61),
+	(674,"cebolla cabezona","proct_nom_mer_hola14",900,1,71,82,62),
+	(675,"papa amarilla","proct_nom_mer_hola15",900,0,71,82,62),
+	(676,"cebolla larga","proct_nom_mer_hola16",600,1,71,82,62),
+	(677,"Antonio","Carne humana :v okno xD",1000000,0,73,80,62);
+select * from producto;
+
+-------------------------------------
+describe stock_merca_producto;
+select * from mercante;
+
+insert into stock_merca_producto(pk_fk_id_mercante,pk_fk_id_producto,fecha_stock,dispon_stock) 
+	values(221,660,'2008/01/30',30),
+	(221,661,'2006/02/28',10),
+	(222,662,'2007/03/03',50),
+	(221,663,'2008/04/29',30),
+	(222,664,'2009/05/28',10),
+	(222,665,'2012/06/05',12),
+	(222,666,'2012/07/04',8),
+	(222,667,'2016/08/09',130),
+	(223,668,'2015/01/04',56),
+	(223,669,'2016/08/08',60),
+	(223,670,'2017/01/05',70),
+	(223,671,'2018/01/06',80),
+	(224,672,'2013/11/25',24),
+	(224,673,'2001/12/22',90),
+	(224,674,'2018/03/28',36),
+	(224,675,'2018/11/19',600),
+	(224,676,'2001/12/16',100),
+	(225,677,'2025/12/24',5),
+	(221,675,'2018/11/19',600),
+	(222,676,'2001/12/16',100),
+	(223,661,'2018/11/19',600),
+	(224,664,'2001/12/16',100);
+	
+select * from stock_merca_producto;
+
+---------------------------------------
+describe detalle_pedido_produc;
+select * from pedido;
+
+insert into detalle_pedido_produc(pk_fk_id_pedido,pk_fk_id_producto,cantid_detalle,precio_detalle,total_detalle)
+	values(550,660,5,500,500),
+	(550,661,12,100,1200),
+	(551,662,2,3200,6200),
+	(551,660,3,2000,6000),
+	(552,663,100,560,5600),
+	(552,664,51,110,5100),
+	(553,664,6,700,5200),
+	(553,665,8,600,3500),
+	(554,666,90,700,6400),
+	(554,667,6,600,5200),
+	(555,668,6,800,5600),
+	(555,669,80,600,2300),
+	(556,670,10,300,4600),
+	(556,668,30,600,5000),
+	(556,660,10,100,1000),
+	(557,661,6,500,3000),
+	(558,665,25,500,2500),
+	(559,666,65,500,600),
+	(560,670,3,500,5800),
+	(561,665,4,500,500),
+	(562,672,5,1000000,1000000);
+
+select * from detalle_pedido_produc;
 
 
 
 
-
+---------------------------------------
 
 
 
