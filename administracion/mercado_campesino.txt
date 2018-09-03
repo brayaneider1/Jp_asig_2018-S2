@@ -155,28 +155,28 @@ alter table producto add index(codigo_producto);
 
 
 
-insert into usuario values(111,"nom_usur1","contra_user1","nom_pers1","apelli_pers1","email_pers1"),
-	(112,"nom_usur2","contra_user2","nom_pers2","apelli_pers2","email_pers2"),
-	(113,"nom_usur3","contra_user3","nom_pers3","apelli_pers3","email_pers3"),
-	(114,"nom_usur4","contra_user4","nom_pers4","apelli_pers4","email_pers4"),
-	(115,"nom_usur5","contra_user5","nom_pers5","apelli_pers5","email_pers5"),
-	(116,"nom_usur6","contra_user6","nom_pers6","apelli_pers6","email_pers6"),
-	(117,"nom_usur7","contra_user7","nom_pers7","apelli_pers7","email_pers7"),
-	(118,"nom_usur8","contra_user8","nom_pers8","apelli_pers8","email_pers8"),
-	(119,"nom_usur9","contra_user9","nom_pers9","apelli_pers9","email_pers9"),
-	(120,"nom_usur10","contra_user10","nom_pers10","apelli_pers10","email_pers10"),
-	(121,"nom_usur11","contra_user11","nom_pers11","apelli_pers11","email_pers11"),
-	(122,"nom_usur12","contra_user12","nom_pers12","apelli_pers12","email_pers12");
-
+insert into usuario values(111,"nom_usur1Merc","contra_user1","nom_pers1","apelli_pers1","email_pers1"),
+	(112,"nom_usur2cliec","contra_user2","nom_pers2","apelli_pers2","email_pers2"),
+	(113,"nom_usur3Merc","contra_user3","nom_pers3","apelli_pers3","email_pers3"),
+	(114,"nom_usur4cliec","contra_user4","nom_pers4","apelli_pers4","email_pers4"),
+	(115,"nom_usur5Merc","contra_user5","nom_pers5","apelli_pers5","email_pers5"),
+	(116,"nom_usur6cliec","contra_user6","nom_pers6","apelli_pers6","email_pers6"),
+	(117,"nom_usur7Merc","contra_user7","nom_pers7","apelli_pers7","email_pers7"),
+	(118,"nom_usur8cliec","contra_user8","nom_pers8","apelli_pers8","email_pers8"),
+	(119,"nom_usur9cliec","contra_user9","nom_pers9","apelli_pers9","email_pers9"),
+	(120,"nom_usur10cliec","contra_user10","nom_pers10","apelli_pers10","email_pers10"),
+	(121,"nom_usur11cliec","contra_user11","nom_pers11","apelli_pers11","email_pers11"),
+	(122,"nom_usur12Merc","contra_user12","nom_pers12","apelli_pers12","email_pers12");
 select * from usuario;
+
 
 insert into mercante(id_mercante,codigo_mercante,fk_id_usuario) values(221,"123codigo_merc999",111),
 	(222,"123codigo_merc998",113),
 	(223,"123codigo_merc997",115),
 	(224,"123codigo_merc996",117),
 	(225,"123codigo_merc995",122);
-
 select * from mercante; 
+
 
 insert into cliente(id_cliente,codigo_cliente,fk_id_usuario) values(331,"123codigo_cliec880",112),
 	(332,"123codigo_cliec881",114),
@@ -185,7 +185,6 @@ insert into cliente(id_cliente,codigo_cliente,fk_id_usuario) values(331,"123codi
 	(335,"123codigo_cliec884",119),
 	(336,"123codigo_cliec885",120),
 	(337,"123codigo_cliec886",121);
-
 select * from cliente; 
 
 
@@ -340,13 +339,79 @@ insert into detalle_pedido_produc(pk_fk_id_pedido,pk_fk_id_producto,cantid_detal
 
 select * from detalle_pedido_produc;
 
+---------------Consultas ---------------
+--ordenado por producto se observa que varios producto se promociona el mismo producto 
+select usuario.nom_usuario,producto.nom_producto from usuario
+	inner join mercante on mercante.fk_id_usuario = usuario.id_usuario
+	inner join stock_merca_producto on stock_merca_producto.pk_fk_id_mercante = mercante.id_mercante
+	inner join producto on producto.id_producto = stock_merca_producto.pk_fk_id_producto
+	order by  producto.nom_producto asc; 
+----------------------- ordenado por nombre de usuario 
+select usuario.nom_usuario,usuario.id_usuario,producto.nom_producto from usuario
+	inner join mercante on mercante.fk_id_usuario = usuario.id_usuario
+	inner join stock_merca_producto on stock_merca_producto.pk_fk_id_mercante = mercante.id_mercante
+	inner join producto on producto.id_producto = stock_merca_producto.pk_fk_id_producto
+	order by  usuario.nom_usuario asc; 
+---------------------------------------------------------------------
+
+
+--consuta maximaaaaaaaaa
+select usuario.nom_usuario,usuario.id_usuario,cliente.id_cliente,mercante.id_mercante,producto.nom_producto from usuario
+	inner join mercante on mercante.fk_id_usuario = usuario.id_usuario
+	inner join stock_merca_producto on stock_merca_producto.pk_fk_id_mercante = mercante.id_mercante
+	inner join producto on producto.id_producto = stock_merca_producto.pk_fk_id_producto
+	inner join detalle_pedido_produc on detalle_pedido_produc.pk_fk_id_producto = producto.id_producto
+	inner join pedido on pedido.id_pedido = detalle_pedido_produc.pk_fk_id_pedido
+	inner join cliente on cliente.id_cliente = pedido.fk_id_cliente
+	where pedido.fk_id_cliente = cliente.id_cliente
+	order by  usuario.nom_usuario asc; 
+-----------------------------------------------------------
+select usuario.nom_usuario,usuario.id_usuario,cliente.id_cliente,mercante.id_mercante,cliente.codigo_cliente,producto.nom_producto from usuario
+	inner join mercante on mercante.fk_id_usuario = usuario.id_usuario
+	inner join stock_merca_producto on stock_merca_producto.pk_fk_id_mercante = mercante.id_mercante
+	inner join producto on producto.id_producto = stock_merca_producto.pk_fk_id_producto
+	inner join detalle_pedido_produc on detalle_pedido_produc.pk_fk_id_producto = producto.id_producto
+	inner join pedido on pedido.id_pedido = detalle_pedido_produc.pk_fk_id_pedido
+	inner join cliente on cliente.id_cliente = pedido.fk_id_cliente
+	
+	order by  usuario.nom_usuario asc; 
+------------------------------------
+select usuario.nom_usuario,usuario.id_usuario,cliente.id_cliente,cliente.codigo_cliente from usuario
+	inner join mercante on mercante.fk_id_usuario = usuario.id_usuario
+	inner join stock_merca_producto on stock_merca_producto.pk_fk_id_mercante = mercante.id_mercante
+	inner join producto on producto.id_producto = stock_merca_producto.pk_fk_id_producto
+	inner join detalle_pedido_produc on detalle_pedido_produc.pk_fk_id_producto = producto.id_producto
+	inner join pedido on pedido.id_pedido = detalle_pedido_produc.pk_fk_id_pedido
+	inner join cliente on cliente.id_cliente = pedido.fk_id_cliente
+	where producto.id_producto = 660
+	order by  usuario.nom_usuario asc; 
 
 
 
----------------------------------------
+
+-------------------------
+--todos lo que tenga el producto con nombre "huevos"
+select usuario.nom_usuario,usuario.id_usuario,producto.nom_producto from usuario
+	inner join mercante on mercante.fk_id_usuario = usuario.id_usuario
+	inner join stock_merca_producto on stock_merca_producto.pk_fk_id_mercante = mercante.id_mercante
+	inner join producto on producto.id_producto = stock_merca_producto.pk_fk_id_producto
+	where nom_producto="huevos"
+	order by  usuario.nom_usuario asc; 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------
 insert into mercante(id_mercante,fk_id_usuario) values(221,111),
 	(222,113),
 	(223,115),
