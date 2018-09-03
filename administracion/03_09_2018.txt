@@ -1,0 +1,126 @@
+create database bdhr;
+use bdhr;
+
+create table region(id_region int, nom_region varchar(100));
+
+create table pais(id_pais int, nom_pais varchar(100), fk_id_region int);
+
+create table direccion(id_direcc int, calle_direcc varchar(100), codigo_postal int, ciudad varchar(100),
+	provicia varchar(100), fk_id_pais int);
+
+
+create table departamento(id_depart int, 
+	nom_depart varchar(100), 
+	fk_manager_id_emplea int, 
+	fk_id_direcc int);
+
+
+create table empleado(id_emplea int,
+	nom_emplea varchar(100), 
+	apelli_emplea varchar(100), 
+	email_emplea varchar(100), 
+	numero_celu_emplea varchar(100),
+	ingreso_fecha_emplea date,
+	salari_emplea int, 
+	comisi_emplea int, 
+	fk_id_emplea_manager int, 
+	fk_id_depart int,
+	fk_id_trabaj int);
+
+
+create table trabajo(id_trabaj int, nom_trabaj varchar(100), mini_salari int, maxi_salari int);
+
+
+create table historia_trabajo(pk_fk_id_emplea int, pk_inicio_fecha date, fecha_final date, fk_id_trabaj int,fk_id_depart int);
+
+
+
+-------------------------------------
+
+alter table region add constraint pk_region 
+primary key (id_region);
+
+alter table pais add constraint pk_pais
+primary key (id_pais);
+
+alter table direccion add constraint pk_direccion
+primary key (id_direcc);
+
+alter table departamento add constraint pk_depart
+primary key (id_depart);
+
+alter table empleado add constraint pk_empleado
+primary key (id_emplea);
+
+alter table trabajo add constraint pk_trabajo
+primary key (id_trabaj);
+
+alter table historia_trabajo add constraint pk_historia_trabajo
+primary key (pk_fk_id_emplea,pk_inicio_fecha);
+
+------------
+describe empleado;
+
+alter table pais  add constraint fk_id_region  foreign key
+(fk_id_region) references region(id_region);
+
+alter table direccion  add constraint fk_id_pais  foreign key
+(fk_id_pais) references pais(id_pais);
+
+
+
+alter table empleado  add constraint fk_fk_id_manager  foreign key
+(fk_id_emplea_manager ) references empleado(id_emplea);
+
+
+alter table empleado  add constraint fk_id_departamento_empl  foreign key
+(fk_id_depart) references departamento(id_depart);
+
+alter table empleado  add constraint fk_id_trabajo_emplea foreign key
+(fk_id_trabaj) references trabajo(id_trabaj);
+
+describe empleado;
+
+--------------------------------
+
+
+alter table departamento  add constraint fk_id_manager_depart  foreign key
+(fk_manager_id_emplea) references empleado(id_emplea);
+
+alter table departamento  add constraint fk_id_direccion_depart  foreign key
+(fk_id_direcc) references direccion (id_direcc);
+
+
+describe departamento;
+
+---------------------------------
+
+
+alter table historia_trabajo  add constraint pk_fk_id_empleado_histor  foreign key
+(pk_fk_id_emplea) references empleado(id_emplea);
+
+
+alter table historia_trabajo  add constraint fk_id_trabajo_histor  foreign key
+(fk_id_trabaj) references trabajo(id_trabaj);
+
+alter table historia_trabajo  add constraint fk_id_depart_histor  foreign key
+(fk_id_depart) references departamento(id_depart);
+
+
+no mirar la consolo mira el modelo, debe buscar donde astar almacenada la llaves foraneas;
+15 registros; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
