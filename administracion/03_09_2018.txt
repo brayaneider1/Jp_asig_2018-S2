@@ -106,21 +106,166 @@ alter table historia_trabajo  add constraint fk_id_trabajo_histor  foreign key
 alter table historia_trabajo  add constraint fk_id_depart_histor  foreign key
 (fk_id_depart) references departamento(id_depart);
 
+---------------------------
+insert into region(id_region, nom_region) values(111,"SurAmerica"),
+	(112,"NorteAmerica"),
+	(113,"CentroAmerica"),
+	(114,"Australia"),
+	(115,"Africa"),
+	(116,"Europa");
+
+insert into pais(id_pais, nom_pais,fk_id_region) values(220,"Pais",111),
+	(221,"Pais1",111),
+	(222,"Pais2",112),
+	(223,"Pais3",112),
+	(224,"Pais4",113),
+	(225,"Pais5",113),
+	(226,"Pais6",114),
+	(227,"Pais7",115),
+	(228,"Pais8",116);
+
+insert into direccion(id_direcc,calle_direcc,codigo_postal,ciudad,provicia, fk_id_pais)
+	values(330,"calle_direcc0",1000,"ciudad0","provincia0",220),
+	(331,"calle_direcc1",1001,"ciudad1","provincia1",220),
+	(332,"calle_direcc2",1002,"ciudad2","provincia2",221),
+	(333,"calle_direcc3",1003,"ciudad3","provincia3",221),
+	(334,"calle_direcc4",1004,"ciudad4","provincia4",222),
+	(335,"calle_direcc5",1005,"ciudad5","provincia5",223),
+	(336,"calle_direcc6",1006,"ciudad6","provincia6",223),
+	(337,"calle_direcc7",1007,"ciudad7","provincia7",224),
+	(338,"calle_direcc8",1008,"ciudad8","provincia8",225),
+	(339,"calle_direcc9",1009,"ciudad9","provincia9",226),
+	(340,"calle_direcc10",1010,"ciudad10","provincia10",227),
+	(341,"calle_direcc11",1011,"ciudad11","provincia11",228);
+
+insert into trabajo(id_trabaj,nom_trabaj,mini_salari,maxi_salari) 
+	values(440,"trabajo0",500000,800000),
+	(441,"trabajo1",600000,800000),
+	(442,"trabajo2",400000,800000),
+	(443,"trabajo3",300000,500000),
+	(444,"trabajo4",690000,1200000),
+	(445,"trabajo5",1000000,2500000),
+	(446,"trabajo6",2500000,3500000);
+
+
+insert into departamento(id_depart,nom_depart,fk_manager_id_emplea,fk_id_direcc)
+	values(550,"departamento0",660,330);
+
+
+
+insert into departamento(id_depart,nom_depart,fk_manager_id_emplea,fk_id_direcc)
+	values
+	(550,"departamento0",null,330),
+	(551,"departamento1",661,330),
+	(552,"departamento2",661,330),
+	(553,"departamento3",661,330),
+	(554,"departamento4",null,330),
+	(555,"departamento5",null,331),
+	(556,"departamento6",null,332);
+
+insert into empleado(id_emplea,
+	nom_emplea,
+	apelli_emplea,
+	email_emplea,
+	numero_celu_emplea, 
+	ingreso_fecha_emplea,
+	salari_emplea,
+	comisi_emplea,
+	fk_id_emplea_manager,
+	fk_id_depart, 
+	fk_id_trabaj) 
+	values(660,"nom_emplea0","apelli_emplea0","email_emplea0",
+	"3102828534-0",'2016/05/29',500000,5,null,550,440);
+
+
+
+insert into empleado(id_emplea,
+	nom_emplea,
+	apelli_emplea,
+	email_emplea,
+	numero_celu_emplea, 
+	ingreso_fecha_emplea,
+	salari_emplea,
+	comisi_emplea,
+	fk_id_emplea_manager,
+	fk_id_depart, 
+	fk_id_trabaj) 
+	values(663,"nom_emplea3","apelli_emplea3","email_emplea3","3102828534-1",'2016/05/29',500000,5,null,550,440),
+	(664,"nom_emplea4","apelli_emplea4","email_emplea4","3102828534-0",'2016/05/29',2500000,5,null,550,441),
+	(665,"nom_emplea5","apelli_emplea5","email_emplea5","3102828534-0",'2016/05/29',3500000,5,661,550,441),
+	(666,"nom_emplea6","apelli_emplea6","email_emplea6","3102828534-0",'2016/05/29',1200000,5,null,551,441),
+	(667,"nom_emplea7","apelli_emplea7","email_emplea7","3102828534-0",'2016/05/29',2700000,5,null,552,442),
+	(668,"nom_emplea8","apelli_emplea8","email_emplea8","3102828534-0",'2016/05/29',6800000,5,null,553,443);
+
+
+insert into departamento(id_depart,nom_depart,fk_manager_id_emplea,fk_id_direcc)
+	values(550,"departamento0",null,330);
+
+
+
+
+
+
+
+select nom_emplea,apelli_emplea, salari_emplea from empleado;
+
+select nom_emplea,email_emplea, ingreso_fecha_emplea from empleado
+	where salari_emplea>2000000
+	order by nom_emplea;
+
+select * from empleado order by id_emplea asc;
+
+select mini_salari as minimo ,maxi_salari from trabajo order;
+
+
+
+insert into (id_mercante,codigo_mercante,fk_id_usuario) values(221,"123codigo_merc999",111),
+
 
 no mirar la consolo mira el modelo, debe buscar donde astar almacenada la llaves foraneas;
 15 registros; 
 
+--salario minimo y maximo de la tabla trabajo
+--traer, nombre apellido y salario del empleado
+--nombre empleado,correo,fecha de ingreso, cullo salario sea mayor de 2 millones 
+
+
+--traer los empleados, cuyo salario sea mayor a 1.500.000 y menor a 3.200.000
+select * from empleado 
+	where salari_emplea>1500000 and salari_emplea<3200000;
 
 
 
 
 
+traer los cargos cuyo salario sea minimo sea o este incluido en  1100.000 millos 600 o millos 
+
+select * from trabajo 
+	where mini_salari<1100000 or mini_salari<600000 or mini_salari<1000000;
+
+select * from trabajo 
+	where mini_salari>1100000 and mini_salari<1600000;
+
+
+select * from trabajo 
+	where (mini_salari>1800000 or mini_salari<2300000);
 
 
 
 
+select * from trabajo 
+	where (mini_salari*5)>3000000 and (maxi_salari*5)>3000000;
+
+select *,(mini_salari*maxi_salari) as promedio,(20) as defecto from trabajo 
+	where (mini_salari>1800000 or mini_salari<2300000);
 
 
+traer los cargos cuyo salario sea mayor de 1millos800 o menos de 23000(dos treciotos)
+traer los salarios que multiplicado por 5 sea mayores a 3 millones 
+traer los salarios cuyo salario minimo no incluya 700 600 900 o el salario minimo este entre no este entre 2millones cuatrocientos  
+traer los salarios cuyo salario minimo sea mayor de la resta de salario maximo que el salario minimo 
+traer todos los registro de trabajo 
+codigo 
 
 
 
