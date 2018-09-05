@@ -58,7 +58,7 @@ primary key (id_trabaj);
 alter table historia_trabajo add constraint pk_historia_trabajo
 primary key (pk_fk_id_emplea,pk_inicio_fecha);
 
-------------
+
 describe empleado;
 
 alter table pais  add constraint fk_id_region  foreign key
@@ -81,8 +81,6 @@ alter table empleado  add constraint fk_id_trabajo_emplea foreign key
 
 describe empleado;
 
---------------------------------
-
 
 alter table departamento  add constraint fk_id_manager_depart  foreign key
 (fk_manager_id_emplea) references empleado(id_emplea);
@@ -93,7 +91,6 @@ alter table departamento  add constraint fk_id_direccion_depart  foreign key
 
 describe departamento;
 
----------------------------------
 
 
 alter table historia_trabajo  add constraint pk_fk_id_empleado_histor  foreign key
@@ -106,7 +103,10 @@ alter table historia_trabajo  add constraint fk_id_trabajo_histor  foreign key
 alter table historia_trabajo  add constraint fk_id_depart_histor  foreign key
 (fk_id_depart) references departamento(id_depart);
 
----------------------------
+--
+
+
+
 insert into region(id_region, nom_region) values(111,"SurAmerica"),
 	(112,"NorteAmerica"),
 	(113,"CentroAmerica"),
@@ -145,37 +145,21 @@ insert into trabajo(id_trabaj,nom_trabaj,mini_salari,maxi_salari)
 	(443,"trabajo3",300000,500000),
 	(444,"trabajo4",690000,1200000),
 	(445,"trabajo5",1000000,2500000),
-	(446,"trabajo6",2500000,3500000);
+	(446,"trabajo6",2500000,3500000),
+	(447,"trabajo7",690000,1200000),
+	(448,"trabajo8",1500000,2000000),
+	(449,"trabajo9",2100000,3100000);
 
 
-insert into departamento(id_depart,nom_depart,fk_manager_id_emplea,fk_id_direcc)
-	values(550,"departamento0",660,330);
 
 
 
 insert into departamento(id_depart,nom_depart,fk_manager_id_emplea,fk_id_direcc)
 	values
 	(550,"departamento0",null,330),
-	(551,"departamento1",661,330),
-	(552,"departamento2",661,330),
-	(553,"departamento3",661,330),
-	(554,"departamento4",null,330),
-	(555,"departamento5",null,331),
-	(556,"departamento6",null,332);
+	(551,"departamento1",null,330),
+	(552,"departamento2",null,330);
 
-insert into empleado(id_emplea,
-	nom_emplea,
-	apelli_emplea,
-	email_emplea,
-	numero_celu_emplea, 
-	ingreso_fecha_emplea,
-	salari_emplea,
-	comisi_emplea,
-	fk_id_emplea_manager,
-	fk_id_depart, 
-	fk_id_trabaj) 
-	values(660,"nom_emplea0","apelli_emplea0","email_emplea0",
-	"3102828534-0",'2016/05/29',500000,5,null,550,440);
 
 
 
@@ -190,13 +174,62 @@ insert into empleado(id_emplea,
 	fk_id_emplea_manager,
 	fk_id_depart, 
 	fk_id_trabaj) 
-	values(663,"nom_emplea3","apelli_emplea3","email_emplea3","3102828534-1",'2016/05/29',500000,5,null,550,440),
-	(664,"nom_emplea4","apelli_emplea4","email_emplea4","3102828534-0",'2016/05/29',2500000,5,null,550,441),
-	(665,"nom_emplea5","apelli_emplea5","email_emplea5","3102828534-0",'2016/05/29',3500000,5,661,550,441),
-	(666,"nom_emplea6","apelli_emplea6","email_emplea6","3102828534-0",'2016/05/29',1200000,5,null,551,441),
-	(667,"nom_emplea7","apelli_emplea7","email_emplea7","3102828534-0",'2016/05/29',2700000,5,null,552,442),
-	(668,"nom_emplea8","apelli_emplea8","email_emplea8","3102828534-0",'2016/05/29',6800000,5,null,553,443);
+	values(660,"nom_emplea0","apelli_emplea0","email_emplea0","3102828534-0",'2016/05/29',500000,5,null,null,440),
+	(661,"nom_emplea1","apelli_emplea1","email_emplea1","3102828534-1",'2016/05/21',150000,1,null,null,440),
+	(662,"nom_emplea2","apelli_emplea2","email_emplea2","3102828534-2",'2018/06/28',2500000,2,null,null,441);
 
+
+update empleado set fk_id_emplea_manager=id_emplea, fk_id_depart=550
+	where id_emplea<>1;
+
+update departamento set fk_manager_id_emplea=(select id_emplea from empleado limit 1)
+	where id_depart<>1;
+
+select * from departamento;
+
+insert into departamento(id_depart,nom_depart,fk_manager_id_emplea,fk_id_direcc)
+	values
+	
+	(553,"departamento3",662,332),
+	(554,"departamento4",null,333),
+	(555,"departamento5",null,332),
+	(556,"departamento6",null,334),
+	(557,"departamento7",661,335),
+	(558,"departamento8",662,336),
+	(559,"departamento9",662,337),
+	(510,"departamento10",662,338);
+
+select * from departamento;
+
+insert into empleado(id_emplea,
+	nom_emplea,
+	apelli_emplea,
+	email_emplea,
+	numero_celu_emplea, 
+	ingreso_fecha_emplea,
+	salari_emplea,
+	comisi_emplea,
+	fk_id_emplea_manager,
+	fk_id_depart, 
+	fk_id_trabaj) 
+	values
+	(663,"nom_emplea3","apelli_emplea3","email_emplea3","31028284-34",'2017/07/25',580000,9,null,553,440),
+	(664,"nom_emplea4","apelli_emplea4","email_emplea4","310534-448",'2015/01/29',2500000,8,null,554,442),
+	(665,"nom_emplea5","apelli_emplea5","email_emplea5","3102828534-58",'2016/09/09',3500000,3,null,556,443),
+	(666,"nom_emplea6","apelli_emplea6","email_emplea6","31028534-65",'2012/05/19',1200000,2,null,558,444),
+	(667,"nom_emplea7","apelli_emplea7","email_emplea7","3108534-74",'2010/12/30',2700000,6,null,555,445),
+	(668,"nom_emplea8","apelli_emplea8","email_emplea8","3102828534-846",'209/06/02',7800000,1,null,558,447),
+	(669,"nom_emplea9","apelli_emplea9","email_emplea9","31028534-58",'2016/09/09',3500000,3,null,559,448),
+	(670,"nom_emplea10","apelli_emplea10","email_emplea10","310534-69",'2012/05/19',1200000,2,null,510,445),
+	(671,"nom_emplea11","apelli_emplea11","email_emplea11","3102828534-77",'2010/12/30',27000000,6,null,552,445),
+	(672,"nom_emplea12","apelli_emplea12","email_emplea12","31025-87",'209/06/02',68100000,1,null,553,448),
+	(673,"nom_emplea13","apelli_emplea13","email_emplea13","3102828534-61",'2012/05/19',1200000,2,670,551,447),
+	(674,"nom_emplea14","apelli_emplea14","email_emplea14","31028534-75",'2010/12/30',6500000,5,667,558,448),
+	(675,"nom_emplea15","apelli_emplea15","email_emplea15","31028534-15",'209/06/02',2800000,12,668,553,449);
+	
+
+
+select *, "hola" as hola from empleado;
 
 insert into departamento(id_depart,nom_depart,fk_manager_id_emplea,fk_id_direcc)
 	values(550,"departamento0",null,330);
@@ -256,7 +289,7 @@ select * from trabajo
 select * from trabajo 
 	where (mini_salari*5)>3000000 and (maxi_salari*5)>3000000;
 
-select *,(mini_salari*maxi_salari) as promedio,(20) as defecto from trabajo 
+select *,(mini_salari*maxi_salari) as muntiplicacion,(20) as defecto from trabajo 
 	where (mini_salari>1800000 or mini_salari<2300000);
 
 
