@@ -389,14 +389,13 @@ select region.nom_region,pais.nom_pais,region.id_region from region
 select region.nom_region,pais.nom_pais,region.id_region from region
 	inner join pais on pais.fk_id_region=region.id_region
 	where region.nom_region="SurAmerica";
+
+
+
 --trer el empleado a quien region pertenece y con salario
 
-
-select region.nom_region,empleado.nom_emplea,region.id_region,empleado.salari_emplea from region
+select region.nom_region,empleado.nom_emplea,region.id_region,empleado.salari_emplea  from region 
 	inner join pais on pais.fk_id_region=region.id_region
 	inner join direccion on direccion.fk_id_pais=pais.id_pais
 	inner join departamento on departamento.fk_id_direcc=direccion.id_direcc
 	inner join empleado on empleado.fk_id_depart=departamento.id_depart;
-
-
-
