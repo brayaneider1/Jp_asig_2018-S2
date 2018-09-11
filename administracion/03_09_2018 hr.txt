@@ -1,0 +1,402 @@
+create database bdhr;
+use bdhr;
+
+create table region(id_region int, nom_region varchar(100));
+
+create table pais(id_pais int, nom_pais varchar(100), fk_id_region int);
+
+create table direccion(id_direcc int, calle_direcc varchar(100), codigo_postal int, ciudad varchar(100),
+	provicia varchar(100), fk_id_pais int);
+
+
+create table departamento(id_depart int, 
+	nom_depart varchar(100), 
+	fk_manager_id_emplea int, 
+	fk_id_direcc int);
+
+
+create table empleado(id_emplea int,
+	nom_emplea varchar(100), 
+	apelli_emplea varchar(100), 
+	email_emplea varchar(100), 
+	numero_celu_emplea varchar(100),
+	ingreso_fecha_emplea date,
+	salari_emplea int, 
+	comisi_emplea int, 
+	fk_id_emplea_manager int, 
+	fk_id_depart int,
+	fk_id_trabaj int);
+
+
+create table trabajo(id_trabaj int, nom_trabaj varchar(100), mini_salari int, maxi_salari int);
+
+
+create table historia_trabajo(pk_fk_id_emplea int, pk_inicio_fecha date, fecha_final date, fk_id_trabaj int,fk_id_depart int);
+
+
+
+-------------------------------------
+
+alter table region add constraint pk_region 
+primary key (id_region);
+
+alter table pais add constraint pk_pais
+primary key (id_pais);
+
+alter table direccion add constraint pk_direccion
+primary key (id_direcc);
+
+alter table departamento add constraint pk_depart
+primary key (id_depart);
+
+alter table empleado add constraint pk_empleado
+primary key (id_emplea);
+
+alter table trabajo add constraint pk_trabajo
+primary key (id_trabaj);
+
+alter table historia_trabajo add constraint pk_historia_trabajo
+primary key (pk_fk_id_emplea,pk_inicio_fecha);
+
+
+describe empleado;
+
+alter table pais  add constraint fk_id_region  foreign key
+(fk_id_region) references region(id_region);
+
+alter table direccion  add constraint fk_id_pais  foreign key
+(fk_id_pais) references pais(id_pais);
+
+
+
+alter table empleado  add constraint fk_fk_id_manager  foreign key
+(fk_id_emplea_manager ) references empleado(id_emplea);
+
+
+alter table empleado  add constraint fk_id_departamento_empl  foreign key
+(fk_id_depart) references departamento(id_depart);
+
+alter table empleado  add constraint fk_id_trabajo_emplea foreign key
+(fk_id_trabaj) references trabajo(id_trabaj);
+
+describe empleado;
+
+
+alter table departamento  add constraint fk_id_manager_depart  foreign key
+(fk_manager_id_emplea) references empleado(id_emplea);
+
+alter table departamento  add constraint fk_id_direccion_depart  foreign key
+(fk_id_direcc) references direccion (id_direcc);
+
+
+describe departamento;
+
+
+
+alter table historia_trabajo  add constraint pk_fk_id_empleado_histor  foreign key
+(pk_fk_id_emplea) references empleado(id_emplea);
+
+
+alter table historia_trabajo  add constraint fk_id_trabajo_histor  foreign key
+(fk_id_trabaj) references trabajo(id_trabaj);
+
+alter table historia_trabajo  add constraint fk_id_depart_histor  foreign key
+(fk_id_depart) references departamento(id_depart);
+
+--
+
+
+
+insert into region(id_region, nom_region) values(111,"SurAmerica"),
+	(112,"NorteAmerica"),
+	(113,"CentroAmerica"),
+	(114,"Australia"),
+	(115,"Africa"),
+	(116,"Europa");
+
+insert into pais(id_pais, nom_pais,fk_id_region) values(220,"Pais",111),
+	(221,"Pais1",111),
+	(222,"Pais2",112),
+	(223,"Pais3",112),
+	(224,"Pais4",113),
+	(225,"Pais5",113),
+	(226,"Pais6",114),
+	(227,"Pais7",115),
+	(228,"Pais8",116);
+
+insert into direccion(id_direcc,calle_direcc,codigo_postal,ciudad,provicia, fk_id_pais)
+	values(330,"calle_direcc0",1000,"ciudad0","provincia0",220),
+	(331,"calle_direcc1",1001,"ciudad1","provincia1",220),
+	(332,"calle_direcc2",1002,"ciudad2","provincia2",221),
+	(333,"calle_direcc3",1003,"ciudad3","provincia3",221),
+	(334,"calle_direcc4",1004,"ciudad4","provincia4",222),
+	(335,"calle_direcc5",1005,"ciudad5","provincia5",223),
+	(336,"calle_direcc6",1006,"ciudad6","provincia6",223),
+	(337,"calle_direcc7",1007,"ciudad7","provincia7",224),
+	(338,"calle_direcc8",1008,"ciudad8","provincia8",225),
+	(339,"calle_direcc9",1009,"ciudad9","provincia9",226),
+	(340,"calle_direcc10",1010,"ciudad10","provincia10",227),
+	(341,"calle_direcc11",1011,"ciudad11","provincia11",228);
+
+insert into trabajo(id_trabaj,nom_trabaj,mini_salari,maxi_salari) 
+	values(440,"trabajo0",500000,800000),
+	(441,"trabajo1",600000,800000),
+	(442,"trabajo2",400000,800000),
+	(443,"trabajo3",300000,500000),
+	(444,"trabajo4",690000,1200000),
+	(445,"trabajo5",1000000,2500000),
+	(446,"trabajo6",2500000,3500000),
+	(447,"trabajo7",690000,1200000),
+	(448,"trabajo8",1500000,2000000),
+	(449,"trabajo9",2100000,3100000);
+
+
+
+
+
+insert into departamento(id_depart,nom_depart,fk_manager_id_emplea,fk_id_direcc)
+	values
+	(550,"departamento0",null,330),
+	(551,"departamento1",null,330),
+	(552,"departamento2",null,330);
+
+
+
+
+insert into empleado(id_emplea,
+	nom_emplea,
+	apelli_emplea,
+	email_emplea,
+	numero_celu_emplea, 
+	ingreso_fecha_emplea,
+	salari_emplea,
+	comisi_emplea,
+	fk_id_emplea_manager,
+	fk_id_depart, 
+	fk_id_trabaj) 
+	values(660,"nom_emplea0","apelli_emplea0","email_emplea0","3102828534-0",'2016/05/29',500000,5,null,null,440),
+	(661,"nom_emplea1","apelli_emplea1","email_emplea1","3102828534-1",'2016/05/21',150000,1,null,null,440),
+	(662,"nom_emplea2","apelli_emplea2","email_emplea2","3102828534-2",'2018/06/28',2500000,2,null,null,441);
+
+
+update empleado set fk_id_emplea_manager=id_emplea, fk_id_depart=550
+	where id_emplea<>1;
+
+update departamento set fk_manager_id_emplea=(select id_emplea from empleado limit 1)
+	where id_depart<>1;
+
+select * from departamento;
+
+insert into departamento(id_depart,nom_depart,fk_manager_id_emplea,fk_id_direcc)
+	values
+	
+	(553,"departamento3",662,332),
+	(554,"departamento4",null,333),
+	(555,"departamento5",null,332),
+	(556,"departamento6",null,334),
+	(557,"departamento7",661,335),
+	(558,"departamento8",662,336),
+	(559,"departamento9",662,337),
+	(510,"departamento10",662,338);
+
+select * from departamento;
+
+insert into empleado(id_emplea,
+	nom_emplea,
+	apelli_emplea,
+	email_emplea,
+	numero_celu_emplea, 
+	ingreso_fecha_emplea,
+	salari_emplea,
+	comisi_emplea,
+	fk_id_emplea_manager,
+	fk_id_depart, 
+	fk_id_trabaj) 
+	values
+	(663,"nom_emplea3","apelli_emplea3","email_emplea3","31028284-34",'2017/07/25',580000,9,null,553,440),
+	(664,"nom_emplea4","apelli_emplea4","email_emplea4","310534-448",'2015/01/29',2500000,8,null,554,442),
+	(665,"nom_emplea5","apelli_emplea5","email_emplea5","3102828534-58",'2016/09/09',3500000,3,null,556,443),
+	(666,"nom_emplea6","apelli_emplea6","email_emplea6","31028534-65",'2012/05/19',1200000,2,null,558,444),
+	(667,"nom_emplea7","apelli_emplea7","email_emplea7","3108534-74",'2010/12/30',2700000,6,null,555,445),
+	(668,"nom_emplea8","apelli_emplea8","email_emplea8","3102828534-846",'209/06/02',7800000,1,null,558,447),
+	(669,"nom_emplea9","apelli_emplea9","email_emplea9","31028534-58",'2016/09/09',3500000,3,null,559,448),
+	(670,"nom_emplea10","apelli_emplea10","email_emplea10","310534-69",'2012/05/19',1200000,2,null,510,445),
+	(671,"nom_emplea11","apelli_emplea11","email_emplea11","3102828534-77",'2010/12/30',27000000,6,null,552,445),
+	(672,"nom_emplea12","apelli_emplea12","email_emplea12","31025-87",'209/06/02',68100000,1,null,553,448),
+	(673,"nom_emplea13","apelli_emplea13","email_emplea13","3102828534-61",'2012/05/19',1200000,2,670,551,447),
+	(674,"nom_emplea14","apelli_emplea14","email_emplea14","31028534-75",'2010/12/30',6500000,5,667,558,448),
+	(675,"nom_emplea15","apelli_emplea15","email_emplea15","31028534-15",'209/06/02',2800000,12,668,553,449);
+	
+
+
+select *, "hola" as hola from empleado;
+
+insert into departamento(id_depart,nom_depart,fk_manager_id_emplea,fk_id_direcc)
+	values(550,"departamento0",null,330);
+
+
+
+
+
+
+
+select nom_emplea,apelli_emplea, salari_emplea from empleado;
+
+select nom_emplea,email_emplea, ingreso_fecha_emplea from empleado
+	where salari_emplea>2000000
+	order by nom_emplea;
+
+select * from empleado order by id_emplea asc;
+
+select mini_salari as minimo ,maxi_salari from trabajo order;
+
+
+
+insert into (id_mercante,codigo_mercante,fk_id_usuario) values(221,"123codigo_merc999",111),
+
+
+no mirar la consolo mira el modelo, debe buscar donde astar almacenada la llaves foraneas;
+15 registros; 
+
+--salario minimo y maximo de la tabla trabajo
+--traer, nombre apellido y salario del empleado
+--nombre empleado,correo,fecha de ingreso, cullo salario sea mayor de 2 millones 
+
+
+--traer los empleados, cuyo salario sea mayor a 1.500.000 y menor a 3.200.000
+select * from empleado 
+	where salari_emplea>1500000 and salari_emplea<3200000;
+
+
+
+
+
+traer los cargos cuyo salario sea minimo sea o este incluido en  1100.000 millos 600 o millos 
+
+select * from trabajo 
+	where mini_salari<1100000 or mini_salari<600000 or mini_salari<1000000;
+
+select * from trabajo 
+	where mini_salari>1100000 and mini_salari<1600000;
+
+
+select * from trabajo 
+	where (mini_salari>1800000 or mini_salari<2300000);
+
+
+
+
+select * from trabajo 
+	where (mini_salari*5)>3000000 and (maxi_salari*5)>3000000;
+
+select *,(mini_salari*maxi_salari) as muntiplicacion,(20) as defecto from trabajo 
+	where (mini_salari>1800000 or mini_salari<2300000);
+
+
+
+traer los cargos cuyo salario sea mayor de 1millos800 o menos de 23000(dos treciotos)
+traer los salarios que multiplicado por 5 sea mayores a 3 millones 
+traer los salarios cuyo salario minimo no incluya 700 600 900 o el salario minimo este entre no  2400000
+traer los salarios cuyo salario minimo sea mayor de la resta de salario maximo que el salario minimo 
+traer todos los registro de trabajo 
+codigo 
+
+
+
+select *,mini_salari*5 as multi from trabajo 
+	where mini_salari*5>3000000;
+
+
+select * from trabajo
+	where mini_salari>(maxi_salari-mini_salari)
+	order by trabajo.id_trabaj asc; 
+
+
+--
+select * from trabajo
+	where mini_salari
+	in (1100000,1300000,1600000)
+	order by trabajo.id_trabaj asc; 
+
+
+--traer los salarios cuyo salario minimo no incluya 700 600 900 o el salario minimo este entre no  2400000 y 3400000
+select * from trabajo 
+	where mini_salari 
+	not in (700000,600000,900000) or not (mini_salari>2400000 and mini_salari<3400000);
+
+select * from trabajo 
+	where mini_salari 
+	not in (700000,600000,900000) or mini_salari not between 2400000 and 3400000;
+
+-- 
+select * from trabajo 
+	where mini_salari 
+	not in (700000,600000,900000) or mini_salari  between 2400000 and 3400000;
+-- between 
+
+
+select * from trabajo 
+	where mini_salari 
+	not in (700000,600000,900000) or not (mini_salari  between 2400000 and 3400000);
+
+
+--
+
+
+select id_trabaj,mini_salari,min(mini_salari) from trabajo
+	 limit 1
+	order by trabajo.mini_salari;
+
+select id_trabaj,mini_salari,min(mini_salari) from trabajo
+	
+	order by mini_salari desc;
+
+
+select id_trabaj,mini_salari,min(mini_salari) from trabajo
+	where mini_salari=(select min(mini_salari) from trabajo)
+	order by mini_salari desc;
+
+
+
+select id_trabaj,mini_salarifrom trabajo
+	where mini_salari=(min(mini_salari))
+	order by mini_salari desc;
+
+insert into trabajo(id_trabaj,nom_trabaj,mini_salari,maxi_);
+-- para incluir es el "in" 
+
+
+
+
+
+--todos lo que tenga el producto con nombre "huevos"
+select usuario.nom_usuario,usuario.id_usuario,producto.nom_producto from usuario
+	inner join mercante on mercante.fk_id_usuario = usuario.id_usuario
+	inner join stock_merca_producto on stock_merca_producto.pk_fk_id_mercante = mercante.id_mercante
+	inner join producto on producto.id_producto = stock_merca_producto.pk_fk_id_producto
+	where nom_producto="huevos"
+	order by  usuario.nom_usuario asc; 
+
+-- la regios con sus pais 
+
+
+select region.nom_region,pais.nom_pais,region.id_region from region
+	inner join pais on pais.fk_id_region=region.id_region;
+
+
+--la regiones con su respectivos paises culla sea X = "SurASmmeria"
+
+select region.nom_region,pais.nom_pais,region.id_region from region
+	inner join pais on pais.fk_id_region=region.id_region
+	where region.nom_region="SurAmerica";
+--trer el empleado a quien region pertenece y con salario
+
+
+select region.nom_region,empleado.nom_emplea,region.id_region,empleado.salari_emplea from region
+	inner join pais on pais.fk_id_region=region.id_region
+	inner join direccion on direccion.fk_id_pais=pais.id_pais
+	inner join departamento on departamento.fk_id_direcc=direccion.id_direcc
+	inner join empleado on empleado.fk_id_depart=departamento.id_depart;
+
+
+
