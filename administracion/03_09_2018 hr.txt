@@ -231,8 +231,66 @@ insert into empleado(id_emplea,
 
 select *, "hola" as hola from empleado;
 
-insert into departamento(id_depart,nom_depart,fk_manager_id_emplea,fk_id_direcc)
-	values(550,"departamento0",null,330);
+
+update empleado set fk_id_emplea_manager=671
+	where  id_emplea>671 ;
+
+update departamento set fk_manager_id_emplea=670
+	where  id_depart>555 ;
+--<>
+update departamento set fk_manager_id_emplea=671
+	where  id_depart>=559 ;
+
+update departamento set fk_manager_id_emplea=666
+	where  id_depart<555 and id_depart>552 ;
+
+update departamento set fk_manager_id_emplea=664
+	where  id_depart=555 ;
+
+insert into historia_trabajo(pk_fk_id_emplea,pk_inicio_fecha,fecha_final,fk_id_trabaj,fk_id_depart )
+	values(660,'2010/12/30','2011/12/30',440,550),
+	(660,'2015/12/30','2018/12/30',441,550),
+	(661,'2013/12/30','2014/12/30',446,551),
+	(662,'2010/3/30','2011/12/30',441,551),
+	(663,'2009/2/28','2010/12/30',442,552),
+	(664,'2001/12/30','2015/12/23',441,552),
+	(665,'2009/12/30','2016/12/20',444,552),
+	(666,'2008/8/30','2015/12/28',447,555),
+	(667,'2006/4/30','2013/12/10',447,553),
+	(665,'2016/1/10','2018/12/16',445,554),
+	(669,'2018/12/31','2019/12/17',444,555),
+	(670,'2013/1/30','2013/12/15',443,556),
+	(671,'2014/3/30','2016/12/19',440,557),
+	(672,'2016/06/30','2011/12/17',442,558),
+	(670,'2018/08/30','2018/12/15',449,559),
+	(673,'2011/12/30','2013/12/12',448,510),
+	(674,'2010/05/30','2011/12/10',448,510),
+	(675,'2014/3/15','2014/03/20',449,510);
+
+
+
+
+
+
+
+select nom_emplea, pk_inicio_fecha as Fecha contrato, nom_depart ,nom_emplea as jefe
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
